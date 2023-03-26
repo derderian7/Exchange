@@ -11,7 +11,7 @@ class testcontroller extends Controller
      */
     public function index()
     {
-        $dfs=3;
+        $fucku=3;
     }
 
     /**
@@ -25,7 +25,7 @@ class testcontroller extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store( $request)
     {
         //
     }
@@ -49,7 +49,7 @@ class testcontroller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update( $request, string $id)
     {
         //
     }

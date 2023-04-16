@@ -11,7 +11,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts=Post::all();
+        return $posts;
     }
 
     /**
@@ -27,12 +28,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|between:2,100',
+            'location' => 'required|string|max:100',
+            'description' => 'string|max:100',
+           // 'image' => //later//
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
         Post::create([
             'title'=>$request->title,
             'description'=>$request->description,
             'location'=>$request->location
         ]
         );
+        
         return response()->json([
             'status' => 'success',
             'message' => 'Post added successfully',
@@ -53,7 +64,7 @@ class PostController extends Controller
     public function edit_post_status(boolean $post_status,string $id)
     {
         $post=Post::findorfail($id);
-        $post_status=Post::findorfail($post_status);
+        $post_status=$post->post_status;
         if ($post_status==0){
         return response()->json([
             'status' => 'success',
@@ -74,16 +85,27 @@ class PostController extends Controller
      */
     public function update(Request $request,$id )
     {
+        $validator = Validator::make($request->all(), [
+            'title' => 'string|between:2,100',
+            'location' => 'string|max:100',
+            'description' => 'string|max:100',
+           // 'image' => //later//
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
         $post=Post::findorfail($id);
         $post->update([
             'title'=>$request->title,
             'description'=>$request->description,
             'location'=>$request->location
         ]);
-        return response()->json([
+         return response()->json([
             'status' => 'success',
             'message' => 'Post updated successfully',
         ]);
+       
+       
     }
 
     /**

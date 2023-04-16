@@ -25,4 +25,4 @@ Route::controller(AuthController::class)->group(function () {
 
 });
 Route::apiResources('posts',PostController::class);
-Route::get('post_status',PostController::class,'edit_post_status');
+Route::get('post_status/{id}',PostController::class,'edit_post_status');

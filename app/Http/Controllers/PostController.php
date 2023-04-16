@@ -12,7 +12,10 @@ class PostController extends Controller
     public function index()
     {
         $posts=Post::all();
-        return $posts;
+        return response()->json([
+            'status' => 'success',
+            'data' => $posts,
+        ]);
     }
 
     /**
@@ -61,7 +64,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit_post_status(boolean $post_status,string $id)
+    public function edit_post_status(string $id)
     {
         $post=Post::findorfail($id);
         $post_status=$post->post_status;

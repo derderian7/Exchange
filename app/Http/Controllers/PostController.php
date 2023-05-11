@@ -69,9 +69,11 @@ class PostController extends Controller
         $post=Post::findorfail($id);
         $post_status=$post->post_status;
         if ($post_status==0){
+            $post->update(['post_status'=>'1']);
+            
         return response()->json([
             'status' => 'success',
-            'message' => 'Posted on the opening page',
+            'message' => 'Posted on the ended page',
         ]);
     }
     else  {

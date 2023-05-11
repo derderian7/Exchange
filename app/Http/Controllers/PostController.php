@@ -37,7 +37,7 @@ class PostController extends Controller
             'title' => 'required|string|between:2,100',
             'location' => 'required|string|max:100',
             'description' => 'string|max:100',
-           // 'image' => //later//
+           // 'image' => //later/////
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);

@@ -24,5 +24,5 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
 
 });
-Route::apiResources('posts',PostController::class);
-Route::get('post_status/{id}',PostController::class,'edit_post_status');
+Route::resource('posts',PostController::class);
+Route::get('post_status/{id}',[PostController::class,'edit_post_status']);

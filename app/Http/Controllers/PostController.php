@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Validator;
 
 class PostController extends Controller
 {
@@ -71,18 +73,18 @@ class PostController extends Controller
         if ($post_status==0){
             $post->update(['post_status'=>'1']);
             
-        return response()->json([
+            return response()->json([
             'status' => 'success',
             'message' => 'Posted on the ended page',
-        ]);
-    }
-    else  {
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Posted on the ending page',
-        ]);
+            ]);
+        }
+        else  {
+            return response()->json([
+              'status' => 'success',
+               'message' => 'Posted on the ending page',
+             ]);
 
-    }
+        }
     }
 
     /**

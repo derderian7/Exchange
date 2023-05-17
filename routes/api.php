@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,4 @@ Route::controller(AuthController::class)->group(function () {
 });
 Route::resource('posts',PostController::class);
 Route::get('post_status/{id}',[PostController::class,'edit_post_status']);
+Route::get('Userposts',[UserController::class,'usersPost']);

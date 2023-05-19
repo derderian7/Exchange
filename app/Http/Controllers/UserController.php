@@ -15,7 +15,7 @@ class UserController extends Controller
 
 
     }
-    public function update(Request $request,$id )
+    public function updateUserProfile(Request $request,$id )
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string|between:2,15',

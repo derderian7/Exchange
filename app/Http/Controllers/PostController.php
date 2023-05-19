@@ -127,4 +127,12 @@ class PostController extends Controller
             'message' => 'Post deleted successfully',
         ]);
     }
+    public function VisitedUserPosts(string $id){
+        $posts=Post::where($id,'user_id');
+        return response()->json([
+            'status' => 'success',
+            'data' => $posts,
+        ]);
+
+    }
 }

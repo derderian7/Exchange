@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('exchange_request', function (Blueprint $table) {
             $table->id();
-            $table->requester_user_id();
-            $table->recevier_requester_user_id();
-            $table->requester_post_id();
+            $table->foreignId('post_id')->constrained('posts');
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('exchange_status')->default('Pending');
             $table->timestamps();
         });
     }

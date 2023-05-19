@@ -29,7 +29,7 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Add new post.
      */
     public function store(Request $request)
     {
@@ -64,7 +64,7 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Post availability.
      */
     public function edit_post_status(string $id)
     {
@@ -80,15 +80,15 @@ class PostController extends Controller
         }
         else  {
             return response()->json([
-              'status' => 'success',
-               'message' => 'Posted on the ending page',
-             ]);
+            'status' => 'success',
+            'message' => 'Posted on the ending page',
+            ]);
 
         }
     }
 
     /**
-     * Update the specified resource in storage.
+     * Edit post .
      */
     public function update(Request $request,$id )
     {
@@ -107,16 +107,16 @@ class PostController extends Controller
             'description'=>$request->description,
             'location'=>$request->location
         ]);
-         return response()->json([
+        return response()->json([
             'status' => 'success',
             'message' => 'Post updated successfully',
         ]);
-       
-       
+    
+    
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete post.
      */
     public function destroy(string $id)
     {

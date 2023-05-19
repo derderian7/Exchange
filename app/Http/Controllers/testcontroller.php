@@ -11,8 +11,8 @@ class testcontroller extends Controller
      */
     public function index()
     {
-        $fucku=3;
-        $liar=5;
+        
+        
     }
 
     /**

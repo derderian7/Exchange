@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
-    public function post(){
-        return $this->belongsTo(Post::class);
+
+    public function posts(){
+        return $this->hasMany(Post::class,'categories_id');
+
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('location');
             $table->boolean('post_status')->default(0);
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('categories_id')->constrained('categories');
             //$table->integer('post_status');
             $table->timestamps();
         });

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    //function to insert use posts in user profile 
+    //function to insert user posts in user profile 
     public function usersPost() {
         $posts = DB::table('posts')->where('user_id', auth()->id())->get();
         return response()->json($posts);

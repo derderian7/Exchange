@@ -28,3 +28,4 @@ Route::controller(AuthController::class)->group(function () {
 Route::resource('posts',PostController::class);
 Route::get('post_status/{id}',[PostController::class,'edit_post_status']);
 Route::get('Userposts',[UserController::class,'usersPost']);
+

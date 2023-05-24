@@ -11,8 +11,9 @@ class testcontroller extends Controller
      */
     public function index()
     {
-        $x=3;
-        $x=55;
+        //$posts = DB::table('posts')->get();
+
+        
         
     }
 

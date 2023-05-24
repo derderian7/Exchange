@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use DB;
 use Illuminate\Http\Request;
 use Validator;
 

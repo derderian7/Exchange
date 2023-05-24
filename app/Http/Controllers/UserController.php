@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use DB;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,19 +20,24 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string|between:2,15',
-            'password'=>'string|min:6|confirmed',
+            'password'=>'string|min:6',
             'location'=>'string|max:100',
-           
            // ' profile image' => //later//
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
+       
         $UserProfile=User::findorfail($id);
+
+        $location= $request->location ?? $UserProfile->location;
+        $password= $request->password ?? $UserProfile->password;
+        $name= $request->name ?? $UserProfile->name;
+      // dd($x,$y,$z);
         $UserProfile->update([
-            'name'=>$request->name,
-            'password'=>$request->password,
-            'location'=>$request->location,
+            'name'=>$name,
+            'password'=>Hash::make($password),
+            'location'=> $location,
           //profile-imagelater
         ]);
         return response()->json([

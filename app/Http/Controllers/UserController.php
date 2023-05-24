@@ -11,14 +11,13 @@ class UserController extends Controller
         $posts = DB::table('posts')->where('user_id', auth()->id())->get();
 
     }
-    public function EditUserProfile(){
-
-
-    }
+    
     public function updateUserProfile(Request $request,$id )
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string|between:2,15',
+            'password'=>'required|string|min:6|confirmed',
+            'location'=>'required|string|max:100',
            
            // ' profile image' => //later//
         ]);
@@ -28,6 +27,9 @@ class UserController extends Controller
         $UserProfile=User::findorfail($id);
         $UserProfile->update([
             'name'=>$request->name,
+            'password'=>$request->password,
+            'location'=>$request->location,+
+
           //profile-imagelater
         ]);
         return response()->json([
@@ -37,4 +39,20 @@ class UserController extends Controller
     
     
     }
+    public function destroy(string $id)
+    {
+        //user::destroy($id);
+        user::findorfail($id)->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'user deleted successfully',
+        ]);
+    }
+    public function ShowUserProfile(){
+        $user=user::all();
+        return response()->json([
+            'status' => 'success',
+            'data' => $user,
+        ]);
+    } 
 }

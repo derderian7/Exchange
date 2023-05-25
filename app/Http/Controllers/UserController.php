@@ -81,8 +81,8 @@ class UserController extends Controller
 
             $userCount = DB::table('users')->whereNotIn('id', function($query) {
                     $query->select('user_id')
-                          ->from('posts')
-                          ->where('post_status', 0);
+                        ->from('posts')
+                        ->where('post_status', 0);
                 })->count();
                 return response()->json($userCount);
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('location');
             $table->boolean('post_status')->default(0);
-            //$table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users');
             //$table->foreignId('categories_id')->constrained('categories');
             
             $table->timestamps();

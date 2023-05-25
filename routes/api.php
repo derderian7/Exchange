@@ -30,4 +30,3 @@ Route::get('post_status/{id}',[PostController::class,'edit_post_status']);
 Route::get('VisitedUserPosts/{id}',[PostController::class,'VisitedUserPosts']);
 Route::get('Userposts',[UserController::class,'usersPost']);
 Route::put('updateUserProfile/{id}',[UserController::class,'updateUserProfile']);
-

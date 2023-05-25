@@ -62,5 +62,28 @@ class UserController extends Controller
             'status' => 'success',
             'data' => $user,
         ]);
-    } 
+    }
+    public function NewUsers(){
+        
+        $users =User::latest()->limit(5)->get();
+        return response()->json($users);
+
+    }
+
+    public function NewUsers2(){
+        $startDate = now()->subDays(7); // get the date 7 days ago
+        $endDate = now(); // get the current date
+        $userCount =User::whereBetween('created_at', [$startDate, $endDate])->count();
+        return response()->json($userCount);
+    }
+
+    public function visitors(){
+
+            $userCount = DB::table('users')->whereNotIn('id', function($query) {
+                    $query->select('user_id')
+                          ->from('posts')
+                          ->where('post_status', 0);
+                })->count();
+                return response()->json($userCount);
+    }
 }

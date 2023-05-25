@@ -27,5 +27,7 @@ Route::controller(AuthController::class)->group(function () {
 });
 Route::resource('posts',PostController::class);
 Route::get('post_status/{id}',[PostController::class,'edit_post_status']);
+Route::get('VisitedUserPosts/{id}',[PostController::class,'VisitedUserPosts']);
 Route::get('Userposts',[UserController::class,'usersPost']);
+Route::put('Userposts/{id}',[UserController::class,'updateUserProfile']);
 

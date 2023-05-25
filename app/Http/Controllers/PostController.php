@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use DB;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -78,7 +79,11 @@ class PostController extends Controller
             'message' => 'Posted on the ended page',
             ]);
         }
-        else  {
+        elseif ($post_status==1) {
+            DB::table('transaction')->insert([
+                'post_id' => $post,
+            ]);
+
             return response()->json([
             'status' => 'success',
             'message' => 'Posted on the ending page',

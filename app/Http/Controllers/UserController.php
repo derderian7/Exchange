@@ -27,7 +27,7 @@ class UserController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-       
+    
         $UserProfile=User::findorfail($id);
 
         $location= $request->location ?? $UserProfile->location;

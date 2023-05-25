@@ -104,20 +104,23 @@ class PostController extends Controller
            // 'image' => //later//
         ]);
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-        $post=Post::findorfail($id);
-        $post->update([
-            'title'=>$request->title,
-            'description'=>$request->description,
-            'location'=>$request->location
-        ]);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Post updated successfully',
-        ]);
-    
-    
+            return response()->json($validator->errors()->toJson(), 400);}
+            $posts=Post::findorfail($id);
+
+            $title= $request->title ?? $posts->title;
+            $location= $request->location ?? $posts->location;
+            $description= $request->description ?? $posts->description;
+          // dd($x,$y,$z);
+            $posts->update([
+                'title'=>$title,
+                'location'=>$location,
+                'description'=> $description,
+            
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'UserProfile updated successfully',
+            ]);   
     }
 
     /**

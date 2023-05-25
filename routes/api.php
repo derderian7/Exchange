@@ -33,3 +33,4 @@ Route::put('updateUserProfile/{id}',[UserController::class,'updateUserProfile'])
 Route::get('NewUsers',[UserController::class,'NewUsers']);
 Route::get('NewUsers2',[UserController::class,'NewUsers2']);
 Route::get('visitors',[UserController::class,'visitors']);
+Route::get('countPostsByMonth',[PostController::class,'countPostsByMonth']);

@@ -144,4 +144,16 @@ class PostController extends Controller
         ]);
 
     }
+    
+
+public function countPostsByMonth()
+{
+    $postsByMonth = Post::countPostsByMonth();
+    return response()->json([
+        'status' => 'success',
+        'data' => $postsByMonth,
+    ]);
+    
+    
+}
 }

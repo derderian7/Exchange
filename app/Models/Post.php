@@ -40,4 +40,13 @@ class Post extends Model
     }
 
 
+    public static function countPostsByMonth()
+{
+    return self::selectRaw('COUNT(*) as count, MONTH(created_at) as month, YEAR(created_at) as year')
+            ->where('post_status', 1)
+            ->groupByRaw('YEAR(created_at), MONTH(created_at)')
+            ->get();
+}
+
+
 }

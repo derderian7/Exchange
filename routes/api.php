@@ -25,10 +25,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
 
 });
+
 Route::resource('posts',PostController::class);
 Route::get('post_status/{id}',[PostController::class,'edit_post_status']);
 Route::get('VisitedUserPosts/{id}',[PostController::class,'VisitedUserPosts']);
 Route::get('countPostsByMonth',[PostController::class,'countPostsByMonth']);
+Route::get('RecentTransactions',[PostController::class,'RecentTransactions']);
 
 
 

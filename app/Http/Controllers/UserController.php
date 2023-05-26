@@ -10,12 +10,15 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    //function to insert user posts in user profile 
+    // get posts by the logged in user 
+
     public function usersPost() {
         $posts = DB::table('posts')->where('user_id', auth()->id())->get();
         return response()->json($posts);
     }
-    
+
+    // edit user profile 
+
     public function updateUserProfile(Request $request,$id )
     {
         $validator = Validator::make($request->all(), [
@@ -44,9 +47,10 @@ class UserController extends Controller
             'status' => 'success',
             'message' => 'UserProfile updated successfully',
         ]);
-    
-    
     }
+
+    // delete user
+
     public function destroy(string $id)
     {
         //user::destroy($id);
@@ -56,6 +60,9 @@ class UserController extends Controller
             'message' => 'user deleted successfully',
         ]);
     }
+
+    //show all users 
+
     public function ShowUserProfile(){
         $user=user::all();
         return response()->json([
@@ -63,12 +70,17 @@ class UserController extends Controller
             'data' => $user,
         ]);
     }
+
+    //show recent users 
+
     public function NewUsers(){
         
         $users =User::latest()->limit(5)->get();
         return response()->json($users);
 
     }
+
+    // count recent users
 
     public function NewUsers2(){
         $startDate = now()->subDays(7); // get the date 7 days ago
@@ -77,6 +89,8 @@ class UserController extends Controller
         return response()->json($userCount);
     }
 
+    //count users with no exchange 
+    
     public function visitors(){
 
             $userCount = DB::table('users')->whereNotIn('id', function($query) {

@@ -10,7 +10,7 @@ use Validator;
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display all posts.
      */
     public function index()
     {
@@ -49,7 +49,6 @@ class PostController extends Controller
             'location'=>$request->location
         ]
         );
-        
         return response()->json([
             'status' => 'success',
             'message' => 'Post added successfully',
@@ -57,8 +56,9 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a specified post.
      */
+
     public function show(string $id)
     {
         $post=Post::findorfail($id)->get();
@@ -68,6 +68,7 @@ class PostController extends Controller
     /**
      * Post availability.
      */
+
     public function edit_post_status(string $id)
     {
         $post=Post::findorfail($id);
@@ -136,6 +137,9 @@ class PostController extends Controller
             'message' => 'Post deleted successfully',
         ]);
     }
+
+    /*posts by specific user_id */
+
     public function VisitedUserPosts(string $id){
         $posts=Post::where($id,'user_id');
         return response()->json([
@@ -145,6 +149,7 @@ class PostController extends Controller
 
     }
     
+/*count posts by month */
 
 public function countPostsByMonth()
 {
@@ -156,4 +161,31 @@ public function countPostsByMonth()
     
     
 }
+
+// count how many exchange we have " total transactions" 
+
+public function countPosts()
+{
+    $count = Post::where('post_status', 1)->count();
+    return response()->json([
+        'status' => 'success',
+        'data' => $count,
+    ]);
+    
+}
+
+public function RecentTransactions()
+{
+    $posts = Post::where('post_status', 1)
+                ->latest()
+                ->take(4)
+                ->with('user')
+                ->get();
+    
+                return response()->json([
+                    'status' => 'success',
+                    'data' => $posts,
+                ]);
+}
+
 }

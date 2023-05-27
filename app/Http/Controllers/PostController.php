@@ -38,17 +38,30 @@ class PostController extends Controller
             'title' => 'required|string|between:2,100',
             'location' => 'required|string|max:100',
             'description' => 'string|max:100',
-           // 'image' => //later/////
+            
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
+
+            $requestData = $request->all();
+        $fileName = time().$request->file('image')->getClientOriginalName();
+        $path = $request->file('image')->storeAs('images', $fileName, 'public');
+        $requestData["image"] = '/storage/'.$path;
+
         Post::create([
             'title'=>$request->title,
             'description'=>$request->description,
-            'location'=>$request->location
+            'location'=>$request->location,
+            'image'=>$requestData["image"],
         ]
         );
+        
+    
+        
+        
+
+    
         return response()->json([
             'status' => 'success',
             'message' => 'Post added successfully',

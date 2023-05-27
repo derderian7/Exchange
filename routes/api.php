@@ -31,7 +31,7 @@ Route::get('post_status/{id}',[PostController::class,'edit_post_status']);
 Route::get('VisitedUserPosts/{id}',[PostController::class,'VisitedUserPosts']);
 Route::get('countPostsByMonth',[PostController::class,'countPostsByMonth']);
 Route::get('RecentTransactions',[PostController::class,'RecentTransactions']);
-
+Route::get('countPosts',[PostController::class,'countPosts']);
 
 
 Route::get('Userposts',[UserController::class,'usersPost']);

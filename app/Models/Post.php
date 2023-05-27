@@ -11,7 +11,7 @@ class Post extends Model
         'title',
         'location',
         'description',
-        //'image',
+        'image',
     ];
 
     protected $guarded=[];

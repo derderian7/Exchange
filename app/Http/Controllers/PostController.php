@@ -187,6 +187,8 @@ public function countPosts()
     
 }
 
+// recent transactions  
+
 public function RecentTransactions()
 {
     $posts = Post::where('post_status', 1)

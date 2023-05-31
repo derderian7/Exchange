@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\percentage_of_category_controller;
+use App\Http\Controllers\percentage_of_location_controller;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -41,3 +42,17 @@ Route::get('NewUsers2',[UserController::class,'NewUsers2']);
 Route::get('visitors',[UserController::class,'visitors']);
 Route::get('ShowUserProfile',[UserController::class,'ShowUserProfile']);
 Route::delete('destroy/{id}',[UserController::class,'destroy']);
+
+
+Route::controller(percentage_of_category_controller::class)->group(function () {
+    Route::get('percentage_clothes', 'percentage_clothes');
+    Route::get('percentage_furniture', 'percentage_furniture');
+    Route::get('percentage_stationery', 'percentage_stationery');
+    Route::get('percentage_devices', 'percentage_devices');
+
+});
+Route::controller(percentage_of_location_controller::class)->group(function () {
+    Route::get('percentage_Damascus', 'percentage_Damascus');
+ 
+
+});

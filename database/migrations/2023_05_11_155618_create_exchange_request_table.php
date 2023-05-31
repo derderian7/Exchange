@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('exchange_request', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id')->constrained('posts');
-            $table->foreignId('user_id')->constrained('users');
+            //$table->foreignId('post_id')->constrained('posts');
+           // $table->foreignId('user_id')->constrained('users');
             $table->string('exchange_status')->default('Pending');
             $table->timestamps();
         });

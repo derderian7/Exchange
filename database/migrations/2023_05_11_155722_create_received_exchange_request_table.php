@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('received_exchange_request', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('exchange_request_user_id')->constrained('exchange_request');
-            $table->foreignId('post_id')->constrained('posts');
-            $table->foreignId('user_id')->constrained('users');
+           // $table->foreignId('exchange_request_user_id')->constrained('exchange_request');
+            //$table->foreignId('post_id')->constrained('posts');
+           // $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

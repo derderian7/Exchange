@@ -17,14 +17,10 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::truncate();
+      //  User::truncate();
 
 
-        DB::table('users')->insert([
-            'name' => 'rama',
-            'email' => 'rama@gmail.com',
-            'password' => Hash::make('rama123'),
-        ]);
+  
 
         DB::table('users')->insert([
             'name' => 'leen',

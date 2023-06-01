@@ -53,6 +53,18 @@ Route::controller(percentage_of_category_controller::class)->group(function () {
 });
 Route::controller(percentage_of_location_controller::class)->group(function () {
     Route::get('percentage_Damascus', 'percentage_Damascus');
- 
-
+    Route::get('percentage_Hama', 'percentage_Hama');
+    Route::get('percentage_Tartus', 'percentage_Tartus');
+    Route::get('percentage_Latakia', 'percentage_Latakia');
+    Route::get('percentage_Idlib', 'percentage_Idlib');
+    Route::get('percentage_Homs', 'percentage_Homs');
+    Route::get('percentage_DeirEz_Zo', 'percentage_DeirEz_Zo');
+    Route::get('percentage_Daraa', 'percentage_Daraa');
+    Route::get('percentage_As_Suwayda', 'percentage_As_Suwayda');
+    Route::get('percentage_Raqqa', 'percentage_Raqqa');
+    Route::get('percentage_Quneitra', 'percentage_Quneitra');
+    Route::get('percentage_Al_Hasakah', 'percentage_Al_Hasakah');
+    Route::get('percentage_Rif_Dimashq', 'percentage_Rif_Dimashq');
+    Route::get('percentage_Aleppo', 'percentage_Aleppo');
+    
 });

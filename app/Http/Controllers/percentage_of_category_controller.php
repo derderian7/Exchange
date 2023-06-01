@@ -36,30 +36,33 @@ class percentage_of_category_controller extends Controller
                 ]);
             }
             public function percentage_stationery(){
-                $count = Category::where('Category', 'stationery')->count();
-                $all_Categories=Category::all()->count();
+                $count = Post::where('categories_id', '3')->count();
+                $all_Categories=Post::all('categories_id')->count();
                 $percentage=$count/$all_Categories;
+        
                 return response()->json([
                     'status' => 'success',
                     'data' => $percentage*100,
                 ]);
             }
                 public function percentage_devices(){
-                    $count = Category::where('Category', 'devices')->count();
-                    $all_Categories=Category::all()->count();
+                    $count = Post::where('categories_id', '4')->count();
+                    $all_Categories=Post::all('categories_id')->count();
                     $percentage=$count/$all_Categories;
+            
                     return response()->json([
                         'status' => 'success',
-                        'data' => $percentage,
+                        'data' => $percentage*100,
                     ]);
             }
             public function percentage_toys(){
-                $count = Category::where('Category', 'toys')->count();
-                $all_Categories=Category::all()->count();
+                $count = Post::where('categories_id', '5')->count();
+                $all_Categories=Post::all('categories_id')->count();
                 $percentage=$count/$all_Categories;
+        
                 return response()->json([
                     'status' => 'success',
-                    'data' => $percentage,
+                    'data' => $percentage*100,
                 ]);
         }
         

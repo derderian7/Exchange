@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\percentage_of_category_controller;
 use App\Http\Controllers\percentage_of_location_controller;
 /*
@@ -35,6 +36,7 @@ Route::get('RecentTransactions',[PostController::class,'RecentTransactions']);
 Route::get('countPosts',[PostController::class,'countPosts']);
 
 
+
 Route::get('Userposts',[UserController::class,'usersPost']);
 Route::put('updateUserProfile/{id}',[UserController::class,'updateUserProfile']);
 Route::get('NewUsers',[UserController::class,'NewUsers']);
@@ -56,3 +58,7 @@ Route::controller(percentage_of_location_controller::class)->group(function () {
  
 
 });
+
+Route::post('report', [ReportController::class, 'store']);
+Route::get('show_report', [ReportController::class, 'index']);
+Route::get('report_count/{id}', [ReportController::class, 'report_count']);

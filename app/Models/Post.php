@@ -47,6 +47,10 @@ class Post extends Model
             ->groupByRaw('YEAR(created_at), MONTH(created_at)')
             ->get();
 }
+public function reports()
+{
+    return $this->hasMany(Report::class,'post_id');
+}
 
 
 }

@@ -59,10 +59,10 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6',
         ]);
-        if($validator->fails()){
+       if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-        /*$requestData = $request->all();
+     /*  $requestData = $request->all();
         $fileName = time().$request->file('image')->getClientOriginalName();
         $path = $request->file('image')->storeAs('Images', $fileName, 'public');
         $requestData["image"] = '/storage/'.$path;
@@ -71,7 +71,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-  //          'image'=>$requestData["image"],
+      //    'image'=>$requestData["image"],
         ]);
 
         $token = Auth::login($user);

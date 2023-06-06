@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\percentage_of_category_controller;
 use App\Http\Controllers\percentage_of_location_controller;
+use App\Http\Controllers\MessageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,7 +29,7 @@ Route::controller(AuthController::class)->group(function () {
 
 });
 
-Route::resource('posts',PostController::class)->middleware(['auth','isAdmin']);
+Route::resource('posts',PostController::class);
 Route::get('post_status/{id}',[PostController::class,'edit_post_status']);
 Route::get('VisitedUserPosts/{id}',[PostController::class,'VisitedUserPosts']);
 Route::get('countPostsByMonth',[PostController::class,'countPostsByMonth']);
@@ -53,7 +54,7 @@ Route::controller(percentage_of_category_controller::class)->group(function () {
     Route::get('percentage_devices', 'percentage_devices');
 
 });
-Route::controller(percentage_of_location_controller::class)->group(function () {
+/*Route::controller(percentage_of_location_controller::class)->group(function () {
     Route::get('percentage_Damascus', 'percentage_Damascus');
     Route::get('percentage_Hama', 'percentage_Hama');
     Route::get('percentage_Tartus', 'percentage_Tartus');
@@ -69,8 +70,12 @@ Route::controller(percentage_of_location_controller::class)->group(function () {
     Route::get('percentage_Rif_Dimashq', 'percentage_Rif_Dimashq');
     Route::get('percentage_Aleppo', 'percentage_Aleppo');
     
-});
+});*/
+Route::post('percentage_of_location/{Location}', [percentage_of_location_controller::class, 'percentage_of_location']);
+
 
 Route::post('report', [ReportController::class, 'store']);
 Route::get('show_report', [ReportController::class, 'index']);
 Route::get('report_count/{id}', [ReportController::class, 'report_count']);
+
+Route::post('messages', [MessageController::class, 'store']);

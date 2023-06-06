@@ -12,7 +12,7 @@ class testcontroller extends Controller
     public function index()
     {
         //$posts = DB::table('posts')->get();
-echo "hello";
+
         
         
     }

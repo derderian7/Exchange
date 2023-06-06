@@ -8,8 +8,8 @@ use DB;
 
 class percentage_of_location_controller extends Controller
 {
-    public function percentage_Damascus(){
-        $count = Post::where('location', 'Damascus')->count();
+    public function percentage_of_location(String $Location){
+        $count = Post::where('location', '$Location')->count();
         $all_locations=Post::all('location')->count();
         $percentage=$count/$all_locations;
 

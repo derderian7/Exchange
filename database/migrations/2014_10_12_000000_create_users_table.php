@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->integer('is_admin')->default('0');
             $table->string('location')->nullable();
-            $table->string('image', 300)->nullable();
+         //   $table->string('image', 300)->nullable();
             //$table->rememberToken();
             $table->timestamps();
         });

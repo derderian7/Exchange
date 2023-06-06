@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
     User::truncate();
 
 
-  
+
 
         DB::table('users')->insert([
             'name' => 'leen',

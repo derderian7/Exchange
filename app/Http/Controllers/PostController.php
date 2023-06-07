@@ -45,10 +45,10 @@ class PostController extends Controller
         }
 
             $requestData = $request->all();
+        if ($request->hasFile('image') && $request->file('image')->isValid()){
         $fileName = time().$request->file('image')->getClientOriginalName();
         $path = $request->file('image')->storeAs('images', $fileName, 'public');
         $requestData["image"] = '/storage/'.$path;
-
         Post::create([
             'title'=>$request->title,
             'description'=>$request->description,
@@ -56,6 +56,22 @@ class PostController extends Controller
             'image'=>$requestData["image"],
         ]
         );
+        }
+        else {
+            
+            $fileName = null;
+            Post::create([
+                'title'=>$request->title,
+                'description'=>$request->description,
+                'location'=>$request->location,
+                
+            ]
+            );
+            
+
+        }
+
+        
         
     
         
@@ -116,7 +132,7 @@ class PostController extends Controller
             'title' => 'string|between:2,100',
             'location' => 'string|max:100',
             'description' => 'string|max:100',
-           // 'image' => //later//
+            
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);}
@@ -125,11 +141,13 @@ class PostController extends Controller
             $title= $request->title ?? $posts->title;
             $location= $request->location ?? $posts->location;
             $description= $request->description ?? $posts->description;
+            $requestData=$request->image ?? $posts->image;
           // dd($x,$y,$z);
             $posts->update([
                 'title'=>$title,
                 'location'=>$location,
                 'description'=> $description,
+                'image'=>$requestData["image"],
             
             ]);
             return response()->json([

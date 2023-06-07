@@ -59,18 +59,28 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6',
         ]);
-        if($validator->fails()){
+    if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $requestData = $request->all();
+    $requestData = $request->all();
+    if ($request->hasFile('image') && $request->file('image')->isValid()){
         $fileName = time().$request->file('image')->getClientOriginalName();
         $path = $request->file('image')->storeAs('Images', $fileName, 'public');
         $requestData["image"] = '/storage/'.$path;
-
+    }
+    else {
+            
+        $fileName = null;
+        return response()->json([
+            'status' => 'fail',
+            'message' => 'fail',
+        ]);
+    }
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'location'=>$request->location,
             'image'=>$requestData["image"],
         ]);
 

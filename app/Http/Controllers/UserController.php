@@ -25,7 +25,7 @@ class UserController extends Controller
             'name' => 'string|between:2,15',
             'password'=>'string|min:6',
             'location'=>'string|max:100',
-           // ' profile image' => //later//
+            
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
@@ -36,12 +36,15 @@ class UserController extends Controller
         $location= $request->location ?? $UserProfile->location;
         $password= $request->password ?? $UserProfile->password;
         $name= $request->name ?? $UserProfile->name;
+        $requestData=$request->image ?? $UserProfile->image;
+
       // dd($x,$y,$z);
         $UserProfile->update([
             'name'=>$name,
             'password'=>Hash::make($password),
             'location'=> $location,
-          //profile-imagelater
+            'image'=>$requestData["image"],
+            
         ]);
         return response()->json([
             'status' => 'success',

@@ -11,7 +11,9 @@ class Post extends Model
         'title',
         'location',
         'description',
-        'image',
+        'user_id',
+        'categories_id',
+        
     ];
 
     protected $guarded=[];
@@ -46,6 +48,10 @@ class Post extends Model
             ->where('post_status', 1)
             ->groupByRaw('YEAR(created_at), MONTH(created_at)')
             ->get();
+}
+public function reports()
+{
+    return $this->hasMany(Report::class,'post_id');
 }
 
 

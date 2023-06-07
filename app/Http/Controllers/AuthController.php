@@ -54,6 +54,7 @@ class AuthController extends Controller
      */
 
     public function register(Request $request){
+        //dd($request);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
@@ -62,8 +63,9 @@ class AuthController extends Controller
     if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-    $requestData = $request->all();
+    
     if ($request->hasFile('image') && $request->file('image')->isValid()){
+        $requestData = $request->all();
         $fileName = time().$request->file('image')->getClientOriginalName();
         $path = $request->file('image')->storeAs('Images', $fileName, 'public');
         $requestData["image"] = '/storage/'.$path;

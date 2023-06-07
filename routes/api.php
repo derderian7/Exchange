@@ -45,11 +45,12 @@ Route::get('NewUsers2',[UserController::class,'NewUsers2']);
 Route::get('visitors',[UserController::class,'visitors']);
 Route::get('ShowUserProfile',[UserController::class,'ShowUserProfile']);
 Route::delete('destroy/{id}',[UserController::class,'destroy']);
+Route::delete('deleteImage/{id}',[UserController::class,'deleteImage']);
 
 
 
 Route::post('percentage_of_location/{Location}', [percentage_of_location_controller::class, 'percentage_of_location']);
-Route::post('percentage_of_categories/{categories_id}', [percentage_of_category_controller::class, 'percentage_of_categories']);
+Route::post('percentage_of_categories/{category}', [percentage_of_category_controller::class, 'percentage_of_categories']);
 
 
 Route::post('report', [ReportController::class, 'store']);

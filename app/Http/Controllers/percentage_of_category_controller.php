@@ -8,9 +8,9 @@ use App\Models\Post;
 //use DB;
 class percentage_of_category_controller extends Controller
 {
-    public function percentage_of_categories(String $categories_id){
+    public function percentage_of_categories(String $category){
         $totalPosts = Post::count();
-        $categoriesPosts = Post::where('categories_id', $categories_id)->count();
+        $categoriesPosts = Post::where('category', $category)->count();
         $percentage = ($categoriesPosts / $totalPosts) * 100;
         $roundedPercentage = round($percentage, 2);
         

@@ -7,6 +7,7 @@ use DB;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -103,4 +104,32 @@ class UserController extends Controller
                 })->count();
                 return response()->json($userCount);
     }
+
+    public function deleteImage($id)
+{
+    $user = User::find($id);
+
+    if (!$user->image) {
+        return response()->json([
+            'success' => false,
+            'message' => 'User does not have an image!'
+        ], 404);
+    }
+
+    $imagePath = $user->image;
+
+    // Check if the file exists before attempting to delete it
+    if (Storage::exists($imagePath)) {
+        Storage::delete($imagePath);
+    }
+
+    $user->image = null;
+    $user->save();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Image deleted successfully!',
+        'data' => $user
+    ], 200);
+}
 }

@@ -34,42 +34,44 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|between:2,100',
-            'location' => 'required|string|max:100',
-            'description' => 'string|max:100',
-            
-        ]);
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
-            $requestData = $request->all();
-        if ($request->hasFile('image') && $request->file('image')->isValid()){
-        $fileName = time().$request->file('image')->getClientOriginalName();
-        $path = $request->file('image')->storeAs('images', $fileName, 'public');
-        $requestData["image"] = '/storage/'.$path;
-        Post::create([
-            'title'=>$request->title,
-            'description'=>$request->description,
-            'location'=>$request->location,
-            'image'=>$requestData["image"],
-        ]
-        );
-        }
-        else {
-            
-            $fileName = null;
-            Post::create([
-                'title'=>$request->title,
-                'description'=>$request->description,
-                'location'=>$request->location,
+      
+            $validator = Validator::make($request->all(), [
+                'title' => 'required|string|between:2,100',
+                'location' => 'required|string|max:100',
+                'description' => 'string|max:100',
                 
-            ]
-            );
+            ]);
+            if($validator->fails()){
+                return response()->json($validator->errors()->toJson(), 400);
+            }
+    
+            try {
+                if ($request->hasFile('image') && $request->file('image')->isValid()){
+                $requestData = $request->all();
+                $fileName = time().$request->file('image')->getClientOriginalName();
+                $path = $request->file('image')->storeAs('images', $fileName, 'public');
+                $requestData["image"] = '/storage/'.$path;
             
-
+                $post = Post::create($requestData);
+            
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Post created successfully!',
+                    'data' => $post
+                ], 201);}
+                else{
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'you have to add an image!',]);
+                }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error creating post: '.$e->getMessage()
+                ], 500);
+            }
         }
+    
 
         
         
@@ -78,11 +80,11 @@ class PostController extends Controller
         
 
     
-        return response()->json([
+      /*  return response()->json([
             'status' => 'success',
             'message' => 'Post added successfully',
-        ]);
-    }
+        ]);*/
+    
 
     /**
      * Display a specified post.

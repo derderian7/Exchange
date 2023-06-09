@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Report;
+use Illuminate\Support\Facades\DB;
   
 
 class ReportController extends controller{
@@ -29,7 +30,7 @@ class ReportController extends controller{
             'data' => $reports,
         ]);
     }
-    public function report_count($id)
+  /*  public function report_count($id)
 {
     $post = Post::find($id);
     if (!$post) {
@@ -43,4 +44,27 @@ class ReportController extends controller{
         'data' => $reportCount,
     ]);
 }
+*/
+
+
+public function getPosts()
+{
+    $posts = DB::table('posts')
+        ->join('users', 'posts.user_id', '=', 'users.id')
+        ->leftJoin('reports', 'posts.id', '=', 'reports.post_id')
+        ->select('posts.id', 'posts.user_id', 'users.name as user_name', DB::raw('count(reports.id) as report_count'))
+        ->groupBy('posts.id', 'posts.user_id', 'users.name')
+        ->get();
+       // dd($posts);
+       $posts = $posts->toArray();
+
+       return response()->json([
+        'success' => true,
+        'message' => 'Posts retrieved successfully!',
+        'data' => $posts
+    ], 200);
+    
+}
+
+
 }

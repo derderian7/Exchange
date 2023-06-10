@@ -58,13 +58,14 @@ Route::post('percentage_of_categories/{category}', [percentage_of_category_contr
 
 Route::post('report', [ReportController::class, 'store']);
 Route::get('show_report', [ReportController::class, 'index']);
-//Route::get('report_count/{id}', [ReportController::class, 'report_count']);
 Route::get('report_count', [ReportController::class, 'getPosts']);
 
 
 
 
 Route::post('messages', [MessageController::class, 'store']);
+Route::get('CountMsg', [MessageController::class, 'CountMsg']);
+
 
 Route::post('feedback', [FeedbackController::class, 'store']);
 Route::get('rating/{userId}', [FeedbackController::class, 'getRating']);

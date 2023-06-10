@@ -52,8 +52,8 @@ public function getPosts()
     $posts = DB::table('posts')
         ->join('users', 'posts.user_id', '=', 'users.id')
         ->leftJoin('reports', 'posts.id', '=', 'reports.post_id')
-        ->select('posts.id', 'posts.user_id', 'users.name as user_name', DB::raw('count(reports.id) as report_count'))
-        ->groupBy('posts.id', 'posts.user_id', 'users.name')
+        ->select('posts.id', 'posts.title', 'users.name as user_name', DB::raw('count(reports.id) as report_count'))
+        ->groupBy('posts.id', 'posts.title', 'users.name')
         ->get();
        // dd($posts);
        $posts = $posts->toArray();

@@ -32,5 +32,13 @@ class MessageController extends Controller
 
         return response()->json(['message' => 'Message sent successfully'], 201);
     }
+
+    public function CountMsg(){
+        $Count = Message::count();
+        return response()->json([
+            'status' => 'success',
+            'data' => $Count,
+        ]);
+    }
 }
 

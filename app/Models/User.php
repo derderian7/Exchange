@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -47,7 +48,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     public function posts(){
-        return $this->hasMany(Post::class,'user_id');
+        return $this->hasMany(Post::class);
 
     }
 
@@ -79,6 +80,22 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Request::class,'user_id');
     }
 
+
+
+
+
+    public function sentExchangeRequests(): HasMany
+    {
+        return $this->hasMany(ExchangeRequest::class, 'sender_id');
+    }
+
+    /**
+     * Get the exchange requests received by this user.
+     */
+    public function receivedExchangeRequests(): HasMany
+    {
+        return $this->hasMany(ExchangeRequest::class, 'receiver_id');
+    }
     
 
 

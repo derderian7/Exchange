@@ -72,13 +72,6 @@ class PostController extends Controller
             }
         }
     
-
-        
-        
-    
-        
-        
-
     
         /*  return response()->json([
             'status' => 'success',
@@ -174,13 +167,13 @@ class PostController extends Controller
     /*posts by specific user_id */
 
     public function VisitedUserPosts(string $id){
-        $posts=Post::where($id,'user_id');
+        $posts = Post::where('user_id', $id)->get();
         return response()->json([
             'status' => 'success',
             'data' => $posts,
         ]);
-
     }
+    
     
 /*count posts by month */
 
@@ -222,5 +215,6 @@ public function RecentTransactions()
                     'data' => $posts,
                 ]);
 }
+
 
 }

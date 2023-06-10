@@ -12,9 +12,8 @@ class Post extends Model
         'location',
         'description',
         'user_id',
-        'categories_id',
-        'image',
-        
+       'categories_id',
+       'image',
         
     ];
 

@@ -46,6 +46,8 @@ Route::get('visitors',[UserController::class,'visitors']);
 Route::get('ShowUserProfile',[UserController::class,'ShowUserProfile']);
 Route::delete('destroy/{id}',[UserController::class,'destroy']);
 Route::delete('deleteImage/{id}',[UserController::class,'deleteImage']);
+Route::put('updateProfileImage/{id}',[UserController::class,'updateProfileImage']);
+
 
 
 

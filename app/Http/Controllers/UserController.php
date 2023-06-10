@@ -37,14 +37,18 @@ class UserController extends Controller
         $location= $request->location ?? $UserProfile->location;
         $password= $request->password ?? $UserProfile->password;
         $name= $request->name ?? $UserProfile->name;
-        $requestData=$request->image ?? $UserProfile->image;
-
+        // if ($UserProfile->image) {
+        //     // Delete the user's current profile picture
+        //     Storage::delete($UserProfile->image);
+        // } else{
+        // $requestData=$request->image ?? $UserProfile->image;
+        // }
       // dd($x,$y,$z);
         $UserProfile->update([
             'name'=>$name,
             'password'=>Hash::make($password),
             'location'=> $location,
-            'image'=>$requestData["image"],
+            //'image'=>$requestData,
             
         ]);
         return response()->json([
@@ -52,6 +56,39 @@ class UserController extends Controller
             'message' => 'UserProfile updated successfully',
         ]);
     }
+
+
+    public function updateProfileImage(Request $request,$id )
+{
+    //dd($request->file('image'));
+    //$user = Auth::user();
+    
+    
+    
+    $UserProfile=User::findorfail($id);
+    if ($UserProfile->image) {
+             // Delete the user's current profile picture
+            Storage::delete($UserProfile->image);
+        }
+        else{
+    
+    // Save the uploaded file to storage
+    $fileName = time().$request->file('image')->getClientOriginalName();
+                $path = $request->file('image')->storeAs('images', $fileName, 'public');
+                $requestData["image"] = '/storage/'.$path;
+    
+    // Update the user's profile image path in the database
+    $UserProfile->image = $requestData;
+    $UserProfile->save();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'UserProfileImage updated successfully',
+    ]);
+
+}
+
+}
 
     // delete user
 
@@ -105,7 +142,7 @@ class UserController extends Controller
                 return response()->json($userCount);
     }
 
-    public function deleteImage($id)
+    public function deleteImage(string $id)
 {
     $user = User::find($id);
 

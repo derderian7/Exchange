@@ -53,50 +53,49 @@ class AuthController extends Controller
      * Register .
      */
 
-    public function register(Request $request){
-        //dd($request);
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
-    if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-    
-    if ($request->hasFile('image') && $request->file('image')->isValid()){
-        $requestData = $request->all();
-        $fileName = time().$request->file('image')->getClientOriginalName();
-        $path = $request->file('image')->storeAs('Images', $fileName, 'public');
-        $requestData["image"] = '/storage/'.$path;
-    }
-    else {
-            
-        $fileName = null;
-        return response()->json([
-            'status' => 'fail',
-            'message' => 'fail',
-        ]);
-    }
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'location'=>$request->location,
-            'image'=>$requestData["image"],
-        ]);
-
-        $token = Auth::login($user);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User created successfully',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
-        ]);
-    }
+     public function register(Request $request)
+     {
+         $validator = Validator::make($request->all(), [
+             'name' => 'required|string|between:2,100',
+             'email' => 'required|string|email|max:100|unique:users',
+             'password' => 'required|string|min:6',
+         ]);
+     
+         if ($validator->fails()) {
+             return response()->json($validator->errors()->toJson(), 400);
+         }
+     
+         $requestData = $request->all();
+     
+         if ($request->hasFile('image') && $request->file('image')->isValid()) {
+             $fileName = time() . $request->file('image')->getClientOriginalName();
+             $path = $request->file('image')->storeAs('images', $fileName, 'public');
+             $requestData["image"] = '/storage/' . $path;
+         } else {
+             $requestData["image"] = null; // Set the image to null if not provided
+         }
+     
+         $user = User::create([
+             'name' => $request->name,
+             'email' => $request->email,
+             'password' => Hash::make($request->password),
+             'location' => $request->location,
+             'image' => $requestData["image"],
+         ]);
+     
+         $token = auth()->login($user);
+     
+         return response()->json([
+             'status' => 'success',
+             'message' => 'User created successfully',
+             'user' => $user,
+             'authorization' => [
+                 'token' => $token,
+                 'type' => 'bearer',
+             ],
+         ]);
+     }
+     
 
     /**
      * Log out .

@@ -19,7 +19,7 @@ return new class extends Migration
         $table->text('message');
         $table->foreign('sender')->references('id')->on('users');
         $table->foreign('receiver')->references('id')->on('users'); // Added nullable()
-
+        $table->string('photo')->nullable();
         $table->timestamps();
     });
 }

@@ -41,6 +41,7 @@ Route::get('countPosts',[PostController::class,'countPosts']);
 
 Route::get('Userposts',[UserController::class,'usersPost']);
 Route::put('updateUserProfile/{id}',[UserController::class,'updateUserProfile']);
+Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);
 Route::get('NewUsers',[UserController::class,'NewUsers']);
 Route::get('NewUsers2',[UserController::class,'NewUsers2']);
 Route::get('visitors',[UserController::class,'visitors']);
@@ -54,8 +55,8 @@ Route::get('getmyprofile',[UserController::class,'getmyprofile']);
 
 
 
-Route::post('percentage_of_location/{Location}', [percentage_of_location_controller::class, 'percentage_of_location']);
-Route::post('percentage_of_categories/{category}', [percentage_of_category_controller::class, 'percentage_of_categories']);
+Route::get('percentage_of_location/{location_name}', [percentage_of_location_controller::class, 'percentage_of_location']);
+Route::get('percentage_of_categories/{id}', [percentage_of_category_controller::class, 'percentage_of_categories']);
 
 
 Route::post('report', [ReportController::class, 'store']);

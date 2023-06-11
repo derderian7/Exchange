@@ -48,6 +48,8 @@ Route::get('ShowUserProfile',[UserController::class,'ShowUserProfile']);
 Route::delete('destroy/{id}',[UserController::class,'destroy']);
 Route::delete('deleteImage/{id}',[UserController::class,'deleteImage']);
 Route::put('updateProfileImage/{id}',[UserController::class,'updateProfileImage']);
+Route::get('showProfile',[UserController::class,'showProfile']);
+Route::get('getmyprofile',[UserController::class,'getmyprofile']);
 
 
 
@@ -69,5 +71,11 @@ Route::get('CountMsg', [MessageController::class, 'CountMsg']);
 
 Route::post('feedback', [FeedbackController::class, 'store']);
 Route::get('rating/{userId}', [FeedbackController::class, 'getRating']);
+Route::get('getMyRating', [FeedbackController::class, 'getMyRating']);
 
 
+Route::post('posts/{postId}/exchange', [PostController::class,'exchange']);
+
+Route::post('posts/{postId}/accept-exchange', [PostController::class,'acceptExchange']);
+
+Route::post('posts/{postId}/complete-exchange', [PostController::class,'completeExchange']);

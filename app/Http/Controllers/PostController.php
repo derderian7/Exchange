@@ -6,6 +6,7 @@ use App\Models\Post;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
+use App\Events\NewNotification;
 
 class PostController extends Controller
 {
@@ -216,5 +217,77 @@ public function RecentTransactions()
                 ]);
 }
 
+public function exchange(Request $request, $postId)
+{
+    // Get the post that user1 wants to exchange
+    $post = Post::find($postId);
+    // Get the user that owns the post
+    $user2 = $post->user;
 
+    // Send a notification to user2 that user1 wants to exchange with their post
+    $data = [
+        'title' => 'Exchange Request',
+        'message' => 'User1 wants to exchange with your post.',
+        'action_text' => 'Accept',
+        'action_url' => url("/posts/{$postId}/accept-exchange"),
+    ];
+    event(new NewNotification($user2, $data));
+    return response()->json([
+        'status' => 'success',
+        'data' => $data,
+    ]);
+}
+
+
+public function acceptExchange(Request $request, $postId)
+{
+    // Get the post that user2 wants to exchange
+    $post = Post::find($postId);
+    
+    $user1 = $post->user;
+    // Send a notification to user1 that user2 wants to exchange with their post
+    $data = [
+        'title' => 'Exchange Request Accepted',
+        'message' => 'User2 has accepted your exchange request.',
+        'action_text' => 'Accept',
+        'action_url' => url("/posts/{$postId}/complete-exchange"),
+        'posts' => $user1->posts()->get(),
+    ];
+    event(new NewNotification($user1, $data));
+
+// Return a JSON response with user1's posts for user2 to choose from
+    $posts = $user1->posts()->get();
+    return response()->json
+    (['posts' => $posts,
+      'notification'=>$data,
+
+    ]);
+}
+
+
+public function completeExchange(Request $request, $postId)
+{
+    // Get the post that the user wants to exchange
+    $post = Post::find($postId);
+
+    // Get the ID of the post that the user wants to exchange with
+    $exchangePostId = $request->input('post_id');
+
+    // Get the post that the user wants to exchange with
+    $exchangePost = Post::find($exchangePostId);
+    // Only exchange the posts if both $post and $exchangePost are not null
+    if ($post && $exchangePost) {
+
+        // Update the exchanged posts' statuses
+        $post->update(['post_status' => 1]);
+        $exchangePost->update(['post_status' => 1]);
+
+        // Return a success message
+        return response()->json(['message' => 'Exchange complete.']);
+    } else {
+        // Return an error message if one or both of the posts are null
+        return response()->json(['error' => 'One or both of the posts do not exist.'], 404);
+    }
+
+}
 }

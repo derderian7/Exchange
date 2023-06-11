@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Feedback;
+use App\Models\Post;
 use DB;
 use Hash;
 use Illuminate\Http\Request;
@@ -37,12 +39,7 @@ class UserController extends Controller
         $location= $request->location ?? $UserProfile->location;
         $password= $request->password ?? $UserProfile->password;
         $name= $request->name ?? $UserProfile->name;
-        // if ($UserProfile->image) {
-        //     // Delete the user's current profile picture
-        //     Storage::delete($UserProfile->image);
-        // } else{
-        // $requestData=$request->image ?? $UserProfile->image;
-        // }
+        
       // dd($x,$y,$z);
         $UserProfile->update([
             'name'=>$name,
@@ -169,4 +166,44 @@ class UserController extends Controller
         'data' => $user
     ], 200);
 }
+
+
+    public function showProfile(Request $request)
+    {
+        $user = $request->user();
+        
+        $name = $user->name != null ? $user->name : 'Unknown';
+        $rating = Feedback::where('user_id', $user->id)->avg('rating');
+        $posts = Post::where('user_id', $user->id)->get();
+
+        return response()->json([
+            'name' => $name,
+            'rating'=>$rating,
+            'posts'=>$posts
+            
+        ]);
+    }
+    public function getmyprofile(Request $request)
+{
+    $user = $request->user();
+
+    $userInfo = DB::table('users')
+    ->join('posts', 'users.id', '=', 'posts.user_id')
+    ->join('feedbacks', 'users.id', '=', 'feedbacks.user_id')
+    ->select('users.name as user_name','users.image',  DB::raw('AVG(feedbacks.rating) as avg_rating'))
+    ->groupBy('users.name')
+    ->get();
+    $userInfo = $userInfo->toArray();
+    $posts = Post::where('user_id', $user->id)->get();
+        return response()->json([
+        'success' => true,
+        'message' => 'profile retrieved successfully!',
+        'data' => $userInfo,
+        'posts'=>$posts,
+    ], 200);
+    
+}
+
+
+
 }

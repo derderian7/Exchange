@@ -24,5 +24,17 @@ class FeedbackController extends Controller
 
         return response()->json(['rating' => $rating]);
     }
+
+    public function getMyRating()
+{
+    // Get the currently authenticated user
+    $user = auth()->user();
+
+    // Get the user's average rating
+    $rating = Feedback::where('user_id', $user->id)->avg('rating');
+
+    // Return the rating as a JSON response
+    return response()->json(['rating' => $rating]);
+}
 }
 

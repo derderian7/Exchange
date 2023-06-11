@@ -55,5 +55,19 @@ public function reports()
     return $this->hasMany(Report::class,'post_id');
 }
 
+public function exchangeWith(?Post $post)
+    {
+        // Only exchange the posts if $post is not null
+        if ($post) {
+            // Swap the user IDs of the two posts
+            $tempUserId = $this->user_id;
+            $this->user_id = $post->user_id;
+            $post->user_id = $tempUserId;
+
+            // Save the changes to the database
+            $this->save();
+            $post->save();
+        }
+    }
 
 }

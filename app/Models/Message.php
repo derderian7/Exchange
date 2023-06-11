@@ -12,7 +12,7 @@ class Message extends Model
         'sender',
         'receiver',
         'message',
-    
+        'photo',
         
     ];
 

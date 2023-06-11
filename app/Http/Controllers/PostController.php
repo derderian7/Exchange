@@ -50,7 +50,7 @@ class PostController extends Controller
                 $requestData = $request->all();
                 $fileName = time().$request->file('image')->getClientOriginalName();
                 $path = $request->file('image')->storeAs('images', $fileName, 'public');
-                $requestData["image"] = '/storage/'.$path;
+                $requestData["image"] = 'storage/'.$path;
             
                 $post = Post::create($requestData);
             
@@ -156,14 +156,20 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //Post::destroy($id);
-        Post::findorfail($id)->delete();
+        $post = Post::findOrFail($id);
+    
+        // Delete associated reports
+        $post->reports()->delete();
+    
+        // Delete the post
+        $post->delete();
+    
         return response()->json([
             'status' => 'success',
             'message' => 'Post deleted successfully',
         ]);
     }
-
+    
     /*posts by specific user_id */
 
     public function VisitedUserPosts(string $id){

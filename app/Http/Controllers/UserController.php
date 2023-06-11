@@ -20,75 +20,74 @@ class UserController extends Controller
 
     // edit user profile 
 
-    public function updateUserProfile(Request $request,$id )
+   
+
+    public function updateUserProfile(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string|between:2,15',
-            'password'=>'string|min:6',
-            'location'=>'string|max:100',
-            
+            'password' => 'string|min:6',
+            'location' => 'string|max:100',
+           
         ]);
-        if($validator->fails()){
+    
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
     
-        $UserProfile=User::findorfail($id);
-
-        $location= $request->location ?? $UserProfile->location;
-        $password= $request->password ?? $UserProfile->password;
-        $name= $request->name ?? $UserProfile->name;
-        // if ($UserProfile->image) {
-        //     // Delete the user's current profile picture
-        //     Storage::delete($UserProfile->image);
-        // } else{
-        // $requestData=$request->image ?? $UserProfile->image;
-        // }
-      // dd($x,$y,$z);
-        $UserProfile->update([
-            'name'=>$name,
-            'password'=>Hash::make($password),
-            'location'=> $location,
-            //'image'=>$requestData,
-            
-        ]);
+        $userProfile = User::findOrFail($id);
+    
+        // Update name, password, and location
+        $userProfile->name = $request->input('name', $userProfile->name);
+        $userProfile->password = $request->input('password') ? Hash::make($request->input('password')) : $userProfile->password;
+        $userProfile->location = $request->input('location', $userProfile->location);
+    
+        // Update profile picture if provided
+        
+    
+        $userProfile->save();
+    
         return response()->json([
             'status' => 'success',
-            'message' => 'UserProfile updated successfully',
+            'message' => 'User profile updated successfully',
         ]);
     }
+    
 
-
-    public function updateProfileImage(Request $request,$id )
-{
-    //dd($request->file('image'));
-    //$user = Auth::user();
+    public function updateProfileImage(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
     
-    
-    
-    $UserProfile=User::findorfail($id);
-    if ($UserProfile->image) {
-             // Delete the user's current profile picture
-            Storage::delete($UserProfile->image);
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
         }
-        else{
     
-    // Save the uploaded file to storage
-    $fileName = time().$request->file('image')->getClientOriginalName();
-                $path = $request->file('image')->storeAs('images', $fileName, 'public');
-                $requestData["image"] = '/storage/'.$path;
+        $user = auth()->user();
+        
+        // Delete the previous profile image if it exists
+        if ($user->image) {
+            $previousImagePath = public_path($user->image);
+            if (file_exists($previousImagePath)) {
+                unlink($previousImagePath);
+            }
+        }
     
-    // Update the user's profile image path in the database
-    $UserProfile->image = $requestData;
-    $UserProfile->save();
-
-    return response()->json([
-        'status' => 'success',
-        'message' => 'UserProfileImage updated successfully',
-    ]);
-
-}
-
-}
+        $fileName = time() . $request->file('image')->getClientOriginalName();
+        $path = $request->file('image')->storeAs('images', $fileName, 'public');
+        $imagePath = '/storage/' . $path;
+    
+        $user->image = $imagePath;
+        $user->save();
+    
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Profile image updated successfully',
+            'user' => $user,
+        ]);
+    }
+    
 
     // delete user
 

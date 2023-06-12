@@ -77,6 +77,6 @@ Route::get('getMyRating', [FeedbackController::class, 'getMyRating']);
 
 Route::post('posts/{postId}/exchange', [PostController::class,'exchange']);
 
-Route::post('posts/{postId}/accept-exchange', [PostController::class,'acceptExchange']);
+Route::post('posts/{postId}/acceptExchange', [PostController::class,'acceptExchange']);
 
 Route::post('posts/{postId}/complete-exchange', [PostController::class,'completeExchange']);

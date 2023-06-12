@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   
+    
         /**
          * Run the migrations.
          */
@@ -20,10 +20,11 @@ return new class extends Migration
                 $table->string('title');
                 $table->string('description');
                 $table->string('location');
+                $table->string('category');
                 $table->boolean('post_status')->default(0);
                 $table->string('image', 300)->nullable();
                 $table->foreignId('user_id')->nullable()->constrained('users');
-                $table->foreignId('category_id')->nullable()->constrained('categories');
+                //$table->foreignId('category_id')->nullable()->constrained('categories');
                 $table->timestamps();
             });
         }

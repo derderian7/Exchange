@@ -40,6 +40,7 @@ class PostController extends Controller
                 'title' => 'required|string|between:2,100',
                 'location' => 'required|string|max:100',
                 'description' => 'string|max:100',
+                'category'=>'required',
                 
             ]);
             if($validator->fails()){
@@ -52,7 +53,7 @@ class PostController extends Controller
                 $fileName = time().$request->file('image')->getClientOriginalName();
                 $path = $request->file('image')->storeAs('images', $fileName, 'public');
                 $requestData["image"] = 'storage/'.$path;
-            
+                
                 $post = Post::create($requestData);
             
                 return response()->json([
@@ -247,6 +248,7 @@ public function exchange(Request $request, $postId)
 
 public function acceptExchange(Request $request, $postId)
 {
+    
     // Get the post that user2 wants to exchange
     $post = Post::find($postId);
     

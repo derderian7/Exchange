@@ -15,12 +15,23 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts=Post::all();
+        $posts = Post::all();
+    
+        $posts->transform(function ($post) {
+            $post->image = url($post->image);
+            return $post;
+        });
+    
         return response()->json([
             'status' => 'success',
             'data' => $posts,
         ]);
     }
+    
+    
+    
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -51,8 +62,10 @@ class PostController extends Controller
                 $requestData = $request->all();
                 $fileName = time().$request->file('image')->getClientOriginalName();
                 $path = $request->file('image')->storeAs('images', $fileName, 'public');
-                $requestData["image"] = 'storage/'.$path;
-            
+           $requestData["image"] = 'storage/image'.$path;
+
+
+                
                 $post = Post::create($requestData);
             
                 return response()->json([
@@ -227,6 +240,10 @@ public function exchange(Request $request, $postId)
 {
     // Get the post that user1 wants to exchange
     $post = Post::find($postId);
+  // Get the authenticated user
+  $user1 = $request->user();
+
+
     // Get the user that owns the post
     $user2 = $post->user;
 
@@ -250,7 +267,9 @@ public function acceptExchange(Request $request, $postId)
     // Get the post that user2 wants to exchange
     $post = Post::find($postId);
     
-    $user1 = $post->user;
+    //$user1 = $post->user;
+    $user1 = $request->user();
+
     // Send a notification to user1 that user2 wants to exchange with their post
     $data = [
         'title' => 'Exchange Request Accepted',

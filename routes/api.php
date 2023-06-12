@@ -10,6 +10,7 @@ use App\Http\Controllers\percentage_of_category_controller;
 use App\Http\Controllers\percentage_of_location_controller;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\imageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,13 +24,15 @@ use App\Http\Controllers\FeedbackController;
 
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'login');
+ Route::post('login', 'login');
+   Route::post('forgot-password', 'forgotPassword');
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
 
 });
-
+//Route::post('forgot-password',[AuthController::class,'forgotPassword']);
+//Route::post('login', [AuthController::class, 'login']);
 Route::resource('posts',PostController::class);
 Route::get('post_status/{id}',[PostController::class,'edit_post_status']);
 Route::get('VisitedUserPosts/{id}',[PostController::class,'VisitedUserPosts']);
@@ -80,3 +83,9 @@ Route::post('posts/{postId}/exchange', [PostController::class,'exchange']);
 Route::post('posts/{postId}/accept-exchange', [PostController::class,'acceptExchange']);
 
 Route::post('posts/{postId}/complete-exchange', [PostController::class,'completeExchange']);
+
+
+
+
+
+Route::get('image', [imageController::class,'sendimage']);

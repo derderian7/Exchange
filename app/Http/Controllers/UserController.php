@@ -37,22 +37,6 @@ class UserController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
     
-<<<<<<< HEAD
-        $UserProfile=User::findorfail($id);
-
-        $location= $request->location ?? $UserProfile->location;
-        $password= $request->password ?? $UserProfile->password;
-        $name= $request->name ?? $UserProfile->name;
-        
-      // dd($x,$y,$z);
-        $UserProfile->update([
-            'name'=>$name,
-            'password'=>Hash::make($password),
-            'location'=> $location,
-            //'image'=>$requestData,
-            
-        ]);
-=======
         $userProfile = User::findOrFail($id);
     
         // Update name, password, and location
@@ -65,7 +49,6 @@ class UserController extends Controller
     
         $userProfile->save();
     
->>>>>>> ce41a935c7e073c01f2206129851a48994c28f84
         return response()->json([
             'status' => 'success',
             'message' => 'User profile updated successfully',

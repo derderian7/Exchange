@@ -15,12 +15,28 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts=Post::all();
+        $posts = Post::join('users', 'posts.user_id', '=', 'users.id')
+            ->select('posts.*', 'users.name as user_name', 'users.image as user_image')
+            ->get();
+    
+        $posts->transform(function ($post) {
+            $post->image = url($post->image);
+            $post->user_image = $post->user_image ? url($post->user_image) : null; // Add the full URL for the user profile image if it exists
+            return $post;
+        });
+    
         return response()->json([
             'status' => 'success',
             'data' => $posts,
         ]);
     }
+    
+    
+    
+    
+    
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -52,9 +68,16 @@ class PostController extends Controller
                 $requestData = $request->all();
                 $fileName = time().$request->file('image')->getClientOriginalName();
                 $path = $request->file('image')->storeAs('images', $fileName, 'public');
+<<<<<<< HEAD
                 $requestData["image"] = 'storage/'.$path;
+=======
+           $requestData["image"] = 'storage/'.$path;
+
+
+>>>>>>> 39e90ce2acfb51986db7edc45203a9a836b2918f
                 
                 $post = Post::create($requestData);
+          
             
                 return response()->json([
                     'success' => true,
@@ -174,13 +197,13 @@ class PostController extends Controller
     
     /*posts by specific user_id */
 
-    public function VisitedUserPosts(string $id){
+   /* public function VisitedUserPosts(string $id){
         $posts = Post::where('user_id', $id)->get();
         return response()->json([
             'status' => 'success',
             'data' => $posts,
         ]);
-    }
+    }*/
     
     
 /*count posts by month */
@@ -228,6 +251,10 @@ public function exchange(Request $request, $postId)
 {
     // Get the post that user1 wants to exchange
     $post = Post::find($postId);
+  // Get the authenticated user
+  $user1 = $request->user();
+
+
     // Get the user that owns the post
     $user2 = $post->user;
 
@@ -252,7 +279,9 @@ public function acceptExchange(Request $request, $postId)
     // Get the post that user2 wants to exchange
     $post = Post::find($postId);
     
-    $user1 = $post->user;
+    //$user1 = $post->user;
+    $user1 = $request->user();
+
     // Send a notification to user1 that user2 wants to exchange with their post
     $data = [
         'title' => 'Exchange Request Accepted',

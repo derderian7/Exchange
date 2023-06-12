@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Validator;
-
+use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
 
@@ -20,35 +21,69 @@ class AuthController extends Controller
      * Log in .
      */
 
-    public function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-        $credentials = $request->only('email', 'password');
+  
+    
+public function login(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|email',
+        'password' => 'required|string|min:6',
+    ]);
 
-        $token = Auth::attempt($credentials);
-        if (!$token) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
-            ], 401);
-        }
-        $user = Auth::user();
-        return response()->json([
-                'status' => 'success',
-                'user' => $user,
-                'authorisation' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
-            ]);
-
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
     }
+
+    $credentials = $request->only('email', 'password');
+
+    $token = Auth::attempt($credentials);
+    if (!$token) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Unauthorized',
+        ], 401);
+    }
+
+    $user = Auth::user();
+
+    return response()->json([
+        'status' => 'success',
+        'user' => $user,
+        'authorisation' => [
+            'token' => $token,
+            'type' => 'bearer',
+        ]
+    ]);
+}
+public function forgotPassword(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|email',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    $response = Password::sendResetLink($request->only('email'), function (Message $message) {
+        $message->subject('Reset Password'); // Set the email subject
+    });
+
+    if ($response === Password::RESET_LINK_SENT) {
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Password reset link sent to your email',
+        ]);
+    } else {
+        throw ValidationException::withMessages([
+            'email' => [trans($response)],
+        ]);
+    }
+}
+
+
+
+    
 
 /**
      * Register .
@@ -71,7 +106,7 @@ class AuthController extends Controller
          if ($request->hasFile('image') && $request->file('image')->isValid()) {
              $fileName = time() . $request->file('image')->getClientOriginalName();
              $path = $request->file('image')->storeAs('images', $fileName, 'public');
-             $requestData["image"] = '/storage/' . $path;
+             $requestData["image"] = 'storage/' . $path;
          } else {
              $requestData["image"] = null; // Set the image to null if not provided
          }

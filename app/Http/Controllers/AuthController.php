@@ -106,7 +106,7 @@ public function forgotPassword(Request $request)
          if ($request->hasFile('image') && $request->file('image')->isValid()) {
              $fileName = time() . $request->file('image')->getClientOriginalName();
              $path = $request->file('image')->storeAs('images', $fileName, 'public');
-             $requestData["image"] = '/storage/' . $path;
+             $requestData["image"] = 'storage/' . $path;
          } else {
              $requestData["image"] = null; // Set the image to null if not provided
          }

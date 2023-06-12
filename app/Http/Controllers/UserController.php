@@ -78,7 +78,7 @@ class UserController extends Controller
     
         $fileName = time() . $request->file('image')->getClientOriginalName();
         $path = $request->file('image')->storeAs('images', $fileName, 'public');
-        $imagePath = '/storage/' . $path;
+        $imagePath = 'storage/' . $path;
     
         $user->image = $imagePath;
         $user->save();
@@ -112,6 +112,16 @@ class UserController extends Controller
             'data' => $user,
         ]);
     }
+    public function GetAdmin()
+    {
+        $admin = User::select('name', 'email')->where('is_admin', 1)->get();
+    
+        return response()->json([
+            'status' => 'success',
+            'data' => $admin,
+        ]);
+    }
+    
 
     //show recent users 
 
@@ -172,7 +182,7 @@ class UserController extends Controller
 }
 
 
-    public function showProfile(Request $request)
+  /*  public function showProfile(Request $request)
     {
         $user = $request->user();
         
@@ -186,27 +196,139 @@ class UserController extends Controller
             'posts'=>$posts
             
         ]);
-    }
-    public function getmyprofile(Request $request)
-{
-    $user = $request->user();
+    }*/
 
-    $userInfo = DB::table('users')
-    ->join('posts', 'users.id', '=', 'posts.user_id')
-    ->join('feedbacks', 'users.id', '=', 'feedbacks.user_id')
-    ->select('users.name as user_name','users.image',  DB::raw('AVG(feedbacks.rating) as avg_rating'))
-    ->groupBy('users.name')
-    ->get();
-    $userInfo = $userInfo->toArray();
-    $posts = Post::where('user_id', $user->id)->get();
-        return response()->json([
-        'success' => true,
-        'message' => 'profile retrieved successfully!',
-        'data' => $userInfo,
-        'posts'=>$posts,
-    ], 200);
+
+    public function getuserprofile(Request $request, $userId)
+    {
+        $user = User::find($userId);
     
-}
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found',
+            ], 404);
+        }
+    
+        $userInfo = DB::table('users')
+            ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
+            ->leftJoin('feedbacks', 'users.id', '=', 'feedbacks.user_id')
+            ->select(
+                'users.name as user_name',
+                'users.image as user_image',
+                DB::raw('AVG(feedbacks.rating) as avg_rating')
+            )
+            ->where('users.id', $user->id)
+            ->groupBy('users.name', 'users.image')
+            ->get();
+    
+        $posts = Post::where('user_id', $user->id)->get();
+    
+        $userInfo->transform(function ($user) {
+            $user->user_image = url('storage/' . $user->user_image);
+            return $user;
+        });
+    
+        $posts->transform(function ($post) {
+            $post->image = url('storage/' . $post->image);
+            return $post;
+        });
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile retrieved successfully!',
+            'data' => $userInfo,
+            'posts' => $posts,
+        ], 200);
+    }
+    
+
+
+
+    public function getmyprofile(Request $request)
+    {
+        $user = $request->user();
+    
+        $userInfo = DB::table('users')
+            ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
+            ->leftJoin('feedbacks', 'users.id', '=', 'feedbacks.user_id')
+            ->select(
+                'users.name as user_name',
+                'users.image as user_image',
+                DB::raw('AVG(feedbacks.rating) as avg_rating')
+            )
+            ->where('users.id', $user->id)
+            ->groupBy('users.name', 'users.image')
+            ->get();
+    
+        $posts = Post::where('user_id', $user->id)->get();
+
+        
+        $userInfo->transform(function ($user) {
+            $user->user_image = url('storage/' . $user->user_image);
+            return $user;
+        });
+        
+
+
+
+        $posts->transform(function ($post) {
+            $post->image = url('storage/' . $post->image);
+            return $post;
+        });
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile retrieved successfully!',
+            'data' => $userInfo,
+            'posts' => $posts,
+        ], 200);
+    }
+    public function getadminprofile(Request $request,$admin)
+    {
+        $user = $request->user();
+    
+        $userInfo = DB::table('users')
+            ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
+            ->leftJoin('feedbacks', 'users.id', '=', 'feedbacks.user_id')
+            ->select(
+                'users.name as user_name',
+                'users.image as user_image',
+                DB::raw('AVG(feedbacks.rating) as avg_rating')
+            )
+            ->where('users.id', $user->id)
+            ->groupBy('users.name', 'users.image')
+            ->get();
+    
+        $posts = Post::where('user_id', $user->id)->get();
+
+        
+        $userInfo->transform(function ($user) {
+            $user->user_image = url('storage/' . $user->user_image);
+            return $user;
+        });
+        
+
+
+
+        $posts->transform(function ($post) {
+            $post->image = url('storage/' . $post->image);
+            return $post;
+        });
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile retrieved successfully!',
+            'data' => $userInfo,
+            'posts' => $posts,
+        ], 200);
+    }
+    
+    
+    
+    
+    
+    
 
 
 

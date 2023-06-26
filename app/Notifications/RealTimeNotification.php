@@ -14,6 +14,9 @@ class RealTimeNotification extends Notification
 {
     use Queueable;
     private $user;
+    private $post;
+    private $targetUser;
+
 
 
     /**

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Storage;
 use Validator;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
+use Notification;
+use App\Notifications\RealTimeNotification;
+
 class AuthController extends Controller
 {
 

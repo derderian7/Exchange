@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExchangeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
@@ -78,8 +79,10 @@ Route::post('feedback', [FeedbackController::class, 'store']);
 Route::get('rating/{userId}', [FeedbackController::class, 'getRating']);
 Route::get('getMyRating', [FeedbackController::class, 'getMyRating']);
 
+Route::post('exchange', [ExchangeController::class,'exchange']);
 
-Route::post('posts/{postId}/exchange', [PostController::class,'exchange']);
+
+//Route::post('posts/{postId}/exchange', [PostController::class,'exchange']);
 
 Route::post('posts/{postId}/acceptExchange', [PostController::class,'acceptExchange']);
 

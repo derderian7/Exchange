@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('message');
-            $table->boolean('read')->default(false);
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('post_id')->references('id')->on('posts')->onDelete('cascade');
-            $table->foreignId('sender_id')->references('id')->on('users')->onDelete('cascade');
-
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->text('data');
+            $table->string('title');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }

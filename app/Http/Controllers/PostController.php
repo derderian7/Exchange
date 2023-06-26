@@ -7,6 +7,8 @@ use DB;
 use Illuminate\Http\Request;
 use Validator;
 use App\Events\NewNotification;
+use Notification;
+use App\Notifications\RealTimeNotification;
 
 class PostController extends Controller
 {
@@ -68,13 +70,9 @@ class PostController extends Controller
                 $requestData = $request->all();
                 $fileName = time().$request->file('image')->getClientOriginalName();
                 $path = $request->file('image')->storeAs('images', $fileName, 'public');
-<<<<<<< HEAD
                 $requestData["image"] = 'storage/'.$path;
-=======
-           $requestData["image"] = 'storage/'.$path;
 
 
->>>>>>> 39e90ce2acfb51986db7edc45203a9a836b2918f
                 
                 $post = Post::create($requestData);
           
@@ -259,16 +257,15 @@ public function exchange(Request $request, $postId)
     $user2 = $post->user;
 
     // Send a notification to user2 that user1 wants to exchange with their post
-    $data = [
+   /* $data = [
         'title' => 'Exchange Request',
         'message' => 'User1 wants to exchange with your post.',
         'action_text' => 'Accept',
         'action_url' => url("/posts/{$postId}/accept-exchange"),
-    ];
-    event(new NewNotification($user2, $data));
+    ];*/
+    Notification::send($user1,new RealTimeNotification($user1,$post,$user2));
     return response()->json([
-        'status' => 'success',
-        'data' => $data,
+        'status' => 'A notification has been sent to the targeted user',
     ]);
 }
 

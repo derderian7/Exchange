@@ -90,6 +90,11 @@ Route::post('posts/{postId}/complete-exchange', [PostController::class,'complete
 
 
 
+Route::get('MarkAsRead_all',[PostController::class,'MarkAsRead_all']);
+
+Route::get('unreadNotifications_count', [PostController::class,'unreadNotifications_count']);
+
+Route::get('unreadNotifications', [PostController::class,'unreadNotifications']);
 
 
 Route::get('image', [imageController::class,'sendimage']);

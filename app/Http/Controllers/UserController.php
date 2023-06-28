@@ -15,8 +15,14 @@ class UserController extends Controller
 {
     // get posts by the logged in user 
 
-    public function usersPost() {
+    public function usersPost_login() {
         $posts = DB::table('posts')->where('user_id', auth()->id())->get();
+        return response()->json($posts);
+    }
+    // get posts by the id of the user
+
+    public function usersPost_id($id) {
+        $posts = DB::table('posts')->where('user_id', $id)->get();
         return response()->json($posts);
     }
 

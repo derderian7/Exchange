@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('is_admin')->default('0');
             $table->string('location')->nullable();
             $table->string('image', 300)->nullable();
+            $table->integer('is_suspended')->default('0');
             $table->rememberToken();
             $table->timestamps();
         });

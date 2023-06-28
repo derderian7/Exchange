@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Notification;
 use App\Notifications\RealTimeNotification;
-use Auth;
 
 class ExchangeController extends Controller
 {
@@ -15,7 +14,7 @@ class ExchangeController extends Controller
     {
         // Perform some action to exchange the posts
         
-        $user = User::findOrFail(1);
+        $user = User::findOrFail(auth()->user()->id);
         $post = Post::findOrFail($request->post_id);
         $targetUser =User::findOrFail($request->user_id);
        // if ($user->isEligibleForExchange()) {

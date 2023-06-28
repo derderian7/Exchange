@@ -255,7 +255,7 @@ public function exchange(Request $request, $postId)
 
     // Get the user that owns the post
     $user2 = $post->user;
-
+    if($user1->is_suspended != 1){
     // Send a notification to user2 that user1 wants to exchange with their post
    /* $data = [
         'title' => 'Exchange Request',
@@ -268,8 +268,14 @@ public function exchange(Request $request, $postId)
         'status' => 'A notification has been sent to the targeted user',
     ]);
 }
+else{
+    return response()->json([
+        'status' => 'You are suspended',
+    ]);
+}
+}
 
-
+/*
 public function acceptExchange(Request $request, $postId)
 {
     
@@ -298,17 +304,15 @@ public function acceptExchange(Request $request, $postId)
     ]);
 }
 
-
+*/
 public function completeExchange(Request $request, $postId)
 {
     // Get the post that the user wants to exchange
     $post = Post::find($postId);
 
-    // Get the ID of the post that the user wants to exchange with
-    $exchangePostId = $request->input('post_id');
-
     // Get the post that the user wants to exchange with
-    $exchangePost = Post::find($exchangePostId);
+    $exchangePost = Post::find($request->input('post_id'));
+    
     // Only exchange the posts if both $post and $exchangePost are not null
     if ($post && $exchangePost) {
 

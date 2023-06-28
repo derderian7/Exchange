@@ -3,12 +3,8 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\BroadcastMessage;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+
 
 class RealTimeNotification extends Notification
 {
@@ -42,9 +38,10 @@ class RealTimeNotification extends Notification
     public function toDatabase(object $notifiable)
     {
         return [
-            'sender_id'=> $this->user->id,
-            'target_user_id'=>$this->targetUser->id,
-          'post_id'=>$this->post->id
+        'sender_id'=> $this->user->id,
+        'target_user_id'=>$this->targetUser->id,
+        'post_id'=>$this->post->id,
+        'message'=>'asdfsdf'
         ];
     }
 }

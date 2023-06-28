@@ -43,7 +43,8 @@ Route::get('countPosts',[PostController::class,'countPosts']);
 
 
 
-Route::get('Userposts',[UserController::class,'usersPost']);
+Route::get('Userposts_id/{id}',[UserController::class,'usersPost_id']);
+Route::get('Userposts_login',[UserController::class,'usersPost_login']);
 Route::put('updateUserProfile/{id}',[UserController::class,'updateUserProfile']);
 //Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);
 Route::get('NewUsers',[UserController::class,'NewUsers']);

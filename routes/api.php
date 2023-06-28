@@ -43,16 +43,10 @@ Route::get('countPosts',[PostController::class,'countPosts']);
 
 
 
-<<<<<<< HEAD
-Route::get('Userposts',[UserController::class,'usersPost']);
-Route::put('updateUserProfile',[UserController::class,'updateUserProfile']);
-Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);
-=======
 Route::get('Userposts_id/{id}',[UserController::class,'usersPost_id']);
 Route::get('Userposts_login',[UserController::class,'usersPost_login']);
 Route::put('updateUserProfile/{id}',[UserController::class,'updateUserProfile']);
-//Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);
->>>>>>> e13cf3383278fcab69fb35b5865b73a0062d4452
+Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);
 Route::get('NewUsers',[UserController::class,'NewUsers']);
 Route::get('NewUsers2',[UserController::class,'NewUsers2']);
 Route::get('visitors',[UserController::class,'visitors']);

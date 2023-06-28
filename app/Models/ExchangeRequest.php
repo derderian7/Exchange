@@ -37,4 +37,3 @@ class ExchangeRequest extends Model
         return $this->belongsTo(Post::class);
     }
 }
-

@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -51,12 +52,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Post::class);
 
     }
-
-    public function notifications()   
-    {
-        return $this->hasMany(Notification::class,'user_id');
-        
-    }
+    
     public function feedbacks(){
         return $this->hasMany(Feedback::class,'user_id');
     }

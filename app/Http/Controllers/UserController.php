@@ -22,7 +22,7 @@ class UserController extends Controller
 
     // edit user profile 
 
-   
+    
 
     public function updateUserProfile(Request $request)
     {
@@ -30,7 +30,7 @@ class UserController extends Controller
             'name' => 'string|between:2,15',
             'password' => 'string|min:6',
             'location' => 'string|max:100',
-           
+            
         ]);
     
         if ($validator->fails()) {

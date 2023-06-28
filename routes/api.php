@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExchangeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
@@ -78,15 +79,22 @@ Route::post('feedback', [FeedbackController::class, 'store']);
 Route::get('rating/{userId}', [FeedbackController::class, 'getRating']);
 Route::get('getMyRating', [FeedbackController::class, 'getMyRating']);
 
+Route::post('exchange', [ExchangeController::class,'exchange']);
 
-Route::post('posts/{postId}/exchange', [PostController::class,'exchange']);
 
-Route::post('posts/{postId}/accept-exchange', [PostController::class,'acceptExchange']);
+//Route::post('posts/{postId}/exchange', [PostController::class,'exchange']);
+
+Route::post('posts/{postId}/acceptExchange', [PostController::class,'acceptExchange']);
 
 Route::post('posts/{postId}/complete-exchange', [PostController::class,'completeExchange']);
 
 
 
+Route::get('MarkAsRead_all',[PostController::class,'MarkAsRead_all']);
+
+Route::get('unreadNotifications_count', [PostController::class,'unreadNotifications_count']);
+
+Route::get('unreadNotifications', [PostController::class,'unreadNotifications']);
 
 
 Route::get('image', [imageController::class,'sendimage']);

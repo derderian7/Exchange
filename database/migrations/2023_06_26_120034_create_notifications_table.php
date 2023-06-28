@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('recivedMsg');
-            $table->string('sentMsg');
-            $table->foreignId('user_id')->constrained('users');
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->text('data');
+            $table->string('title');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }

@@ -7,17 +7,26 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class RealTimeNotification extends Notification
 {
     use Queueable;
+    private $user;
+    private $post;
+    private $targetUser;
+
+
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($user,$post,$targetUser)
     {
-        //
+        $this->user= $user;
+        $this->post=$post;
+        $this->targetUser=$targetUser;
     }
 
     /**
@@ -27,39 +36,15 @@ class RealTimeNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['broadcast']; // Use the Pusher channel driver
+        return ['database']; 
     }
 
-    public function toBroadcast($notifiable)
-    {
-        return new BroadcastMessage([
-            'message' => 'Your notification message here',
-        ]);
-    }
-
-
-
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
+    public function toDatabase(object $notifiable)
     {
         return [
-            //
+            'sender_id'=> $this->user->id,
+            'target_user_id'=>$this->targetUser->id,
+          'post_id'=>$this->post->id
         ];
     }
-    
 }

@@ -7,6 +7,8 @@ use DB;
 use Illuminate\Http\Request;
 use Validator;
 use App\Events\NewNotification;
+use Notification;
+use App\Notifications\RealTimeNotification;
 
 class PostController extends Controller
 {
@@ -56,6 +58,7 @@ class PostController extends Controller
                 'title' => 'required|string|between:2,100',
                 'location' => 'required|string|max:100',
                 'description' => 'string|max:100',
+                'category'=>'required',
                 
             ]);
             if($validator->fails()){
@@ -67,7 +70,7 @@ class PostController extends Controller
                 $requestData = $request->all();
                 $fileName = time().$request->file('image')->getClientOriginalName();
                 $path = $request->file('image')->storeAs('images', $fileName, 'public');
-           $requestData["image"] = 'storage/'.$path;
+                $requestData["image"] = 'storage/'.$path;
 
 
                 
@@ -254,22 +257,22 @@ public function exchange(Request $request, $postId)
     $user2 = $post->user;
 
     // Send a notification to user2 that user1 wants to exchange with their post
-    $data = [
+   /* $data = [
         'title' => 'Exchange Request',
         'message' => 'User1 wants to exchange with your post.',
         'action_text' => 'Accept',
         'action_url' => url("/posts/{$postId}/accept-exchange"),
-    ];
-    event(new NewNotification($user2, $data));
+    ];*/
+    Notification::send($user1,new RealTimeNotification($user1,$post,$user2));
     return response()->json([
-        'status' => 'success',
-        'data' => $data,
+        'status' => 'A notification has been sent to the targeted user',
     ]);
 }
 
 
 public function acceptExchange(Request $request, $postId)
 {
+    
     // Get the post that user2 wants to exchange
     $post = Post::find($postId);
     
@@ -321,4 +324,34 @@ public function completeExchange(Request $request, $postId)
     }
 
 }
+
+public function MarkAsRead_all (Request $request)
+{
+
+    $userUnreadNotification= auth()->user()->unreadNotifications;
+
+    if($userUnreadNotification) {
+        $userUnreadNotification->markAsRead();
+        return response()->json(
+            'success',200
+        );
+    }
+}
+
+public function unreadNotifications_count()
+
+{
+    return auth()->user()->unreadNotifications->count();
+}
+
+public function unreadNotifications()
+
+{
+    foreach (auth()->user()->unreadNotifications as $notification){
+
+    return $notification->data;
+    }
+
+}
+
 }

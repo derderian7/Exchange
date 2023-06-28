@@ -24,7 +24,7 @@ class UserController extends Controller
 
    
 
-    public function updateUserProfile(Request $request, $id)
+    public function updateUserProfile(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string|between:2,15',
@@ -37,8 +37,8 @@ class UserController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
     
-        $userProfile = User::findOrFail($id);
-    
+        //$userProfile = User::findOrFail($id);
+        $userProfile = auth()->user();
         // Update name, password, and location
         $userProfile->name = $request->input('name', $userProfile->name);
         $userProfile->password = $request->input('password') ? Hash::make($request->input('password')) : $userProfile->password;

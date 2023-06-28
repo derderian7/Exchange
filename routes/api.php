@@ -43,15 +43,15 @@ Route::get('countPosts',[PostController::class,'countPosts']);
 
 
 Route::get('Userposts',[UserController::class,'usersPost']);
-Route::put('updateUserProfile/{id}',[UserController::class,'updateUserProfile']);
-//Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);
+Route::put('updateUserProfile',[UserController::class,'updateUserProfile']);
+Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);
 Route::get('NewUsers',[UserController::class,'NewUsers']);
 Route::get('NewUsers2',[UserController::class,'NewUsers2']);
 Route::get('visitors',[UserController::class,'visitors']);
 Route::get('ShowUserProfile',[UserController::class,'ShowUserProfile']);
 Route::delete('destroy/{id}',[UserController::class,'destroy']);
 Route::delete('deleteImage/{id}',[UserController::class,'deleteImage']);
-Route::post('updateProfileImage/{id}',[UserController::class,'updateProfileImage']);
+//Route::post('updateProfileImage/{id}',[UserController::class,'updateProfileImage']);
 //Route::get('showProfile',[UserController::class,'showProfile']);
 Route::get('getmyprofile',[UserController::class,'getmyprofile']);
 Route::get('getuserprofile/{id}',[UserController::class,'getuserprofile']);

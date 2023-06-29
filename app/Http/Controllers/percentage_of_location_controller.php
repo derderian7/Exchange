@@ -8,22 +8,37 @@ use DB;
 
 class percentage_of_location_controller extends Controller
 {
-   
-    
-        public function percentage_of_location(String $location)
-        {
-            $totalPosts = Post::count();
+    public function percentage_of_locations()
+    {
+        $locations = ["Aleppo",
+        "Damascus",
+        "Hama",
+        "Tartus",
+        "Latakia",
+        "Idlib",
+        "Homs",
+        "Deir Ez-Zor",
+        "Daraa ",
+        "As-Suwayda",
+        "Raqqa ",
+        "Quneitra",
+        "Al-Hasakah",
+        "Rif Dimashq"]; 
+        $result = [];
+
+        $totalPosts = Post::count();
+
+        foreach ($locations as $location) {
             $locationPosts = Post::where('location', $location)->count();
-            $percentage = ($locationPosts / $totalPosts) ;
-            $roundedPercentage = round($percentage, 2);
-    
-            return response()->json([
-                'status' => 'success',
-                'data' => $roundedPercentage* 100,
-            ]);
+            $percentage = ($locationPosts / $totalPosts);
+            $roundedPercentage = round($percentage * 100, 2);
+
+            $result[$location] = $roundedPercentage;
         }
-    
-    
 
-
+        return response()->json([
+            'status' => 'success',
+            'data' => $result,
+        ]);
+    }
 };

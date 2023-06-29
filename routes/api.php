@@ -55,14 +55,14 @@ Route::delete('destroy/{id}',[UserController::class,'destroy']);
 Route::delete('deleteImage/{id}',[UserController::class,'deleteImage']);
 //Route::post('updateProfileImage/{id}',[UserController::class,'updateProfileImage']);
 //Route::get('showProfile',[UserController::class,'showProfile']);
-Route::get('getmyprofile',[UserController::class,'getmyprofile']);
+Route::get('getmyprofile',[UserController::class,'getmyprofile']);//work
 Route::get('getuserprofile/{id}',[UserController::class,'getuserprofile']);
 Route::get('GetAdmin',[UserController::class,'GetAdmin']);
 
 
 
-Route::get('percentage_of_location/{location_name}', [percentage_of_location_controller::class, 'percentage_of_location']);
-Route::get('percentage_of_categories/{id}', [percentage_of_category_controller::class, 'percentage_of_categories']);
+Route::get('percentage_of_locations', [percentage_of_location_controller::class, 'percentage_of_locations']);
+Route::get('percentage_of_categories', [percentage_of_category_controller::class, 'percentage_of_categories']);
 
 
 Route::post('report', [ReportController::class, 'store']);
@@ -99,3 +99,4 @@ Route::get('unreadNotifications', [PostController::class,'unreadNotifications'])
 
 
 Route::get('image', [imageController::class,'sendimage']);
+Route::get('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);

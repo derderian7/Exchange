@@ -2,21 +2,34 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use App\Models\Post;
-//use App\Models\Category;
-//use DB;
+use DB;
 class percentage_of_category_controller extends Controller
 {
-    public function percentage_of_categories(String $category_id){
+    public function percentage_of_categories()
+    {
+        $categories = ["clothes",
+        "toys",
+        "books",
+        "electronic",
+        "furniture"
+      ]; 
+        $result = [];
+
         $totalPosts = Post::count();
-        $categoriesPosts = Post::where('category_id', $category_id)->count();
-       $percentage = ($categoriesPosts / $totalPosts) ;
-     $roundedPercentage = round($categoriesPosts, 2);
-        
+
+        foreach ($categories as $category) {
+            $categoryPosts = Post::where('category', $category)->count();
+            $percentage = ($categoryPosts / $totalPosts);
+            $roundedPercentage = round($percentage * 100, 2);
+
+            $result[$category] = $roundedPercentage;
+        }
+
         return response()->json([
             'status' => 'success',
-            'data' => $roundedPercentage*100,
+            'data' => $result,
         ]);
     }
 };

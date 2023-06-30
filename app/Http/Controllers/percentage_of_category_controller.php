@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
 use App\Models\Post;
-//use App\Models\Category;
-//use DB;
+use Exception;
+use Illuminate\Database\QueryException;
+
 class percentage_of_category_controller extends Controller
 {
+    
     public function percentage_of_categories(String $category_id){
+        try{
         $totalPosts = Post::count();
         $categoriesPosts = Post::where('category_id', $category_id)->count();
        $percentage = ($categoriesPosts / $totalPosts) ;
@@ -18,5 +20,10 @@ class percentage_of_category_controller extends Controller
             'status' => 'success',
             'data' => $roundedPercentage*100,
         ]);
+    }catch(QueryException $e){
+        return response()->json($e,500);
+      }catch(Exception $e){
+        return response()->json($e,500);
+      }
     }
 };

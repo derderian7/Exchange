@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Exception;
+use Illuminate\Database\QueryException;
 
 class ProfileController extends Controller
 {

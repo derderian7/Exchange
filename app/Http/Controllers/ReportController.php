@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Report;
 use Illuminate\Support\Facades\DB;
-  
+use Exception;
+use Illuminate\Database\QueryException;
 
 class ReportController extends controller{
 
     public function store(Request $request)
     {
+        try{
         $report = Report::create([
             'post_id' => $request->post_id,
             
@@ -21,14 +23,25 @@ class ReportController extends controller{
             'status' => 'success',
             'message' => 'report stored successfully',
             ]);
+        }catch(QueryException $e){
+            return response()->json($e,500);
+          }catch(Exception $e){
+            return response()->json($e,500);
+          }
     }
     public function index()
     {
+        try{
         $reports=Report::all();
         return response()->json([
             'status' => 'success',
             'data' => $reports,
         ]);
+    }catch(QueryException $e){
+        return response()->json($e,500);
+      }catch(Exception $e){
+        return response()->json($e,500);
+      }
     }
   /*  public function report_count($id)
 {
@@ -49,6 +62,7 @@ class ReportController extends controller{
 
 public function getPosts()
 {
+    try{
     $posts = DB::table('posts')
         ->join('users', 'posts.user_id', '=', 'users.id')
         ->leftJoin('reports', 'posts.id', '=', 'reports.post_id')
@@ -63,6 +77,11 @@ public function getPosts()
         'message' => 'Posts retrieved successfully!',
         'data' => $posts
     ], 200);
+}catch(QueryException $e){
+    return response()->json($e,500);
+  }catch(Exception $e){
+    return response()->json($e,500);
+  }
     
 }
 

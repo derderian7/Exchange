@@ -30,36 +30,47 @@ class UserController extends Controller
 
     
 
-    public function updateUserProfile(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'string|between:2,15',
-            'password' => 'string|min:6',
-            'location' => 'string|max:100',
-            
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-    
-        //$userProfile = User::findOrFail($id);
-        $userProfile = auth()->user();
-        // Update name, password, and location
-        $userProfile->name = $request->input('name', $userProfile->name);
-        $userProfile->password = $request->input('password') ? Hash::make($request->input('password')) : $userProfile->password;
-        $userProfile->location = $request->input('location', $userProfile->location);
-    
-        // Update profile picture if provided
-        
-    
-        $userProfile->save();
-    
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User profile updated successfully',
-        ]);
+
+public function updateUserProfile(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'name' => 'string|between:2,15',
+        'password' => 'string|min:6',
+        'location' => 'string|max:100',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 400);
     }
+
+    $userProfile = auth()->user();
+    
+    // Update name if provided
+    if ($request->has('name')) {
+        $userProfile->name = $request->name;
+    }
+
+    // Update password if provided
+    if ($request->has('password')) {
+        $userProfile->password = Hash::make($request->password);
+    }
+
+    // Update location if provided
+    if ($request->has('location')) {
+        $userProfile->location = $request->location;
+    }
+
+    $userProfile->save();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'User profile updated successfully',
+        'user' => $userProfile
+    ]);
+}
+
+
+////////////////////////////////////
     
 
     public function updateProfileImage(Request $request)

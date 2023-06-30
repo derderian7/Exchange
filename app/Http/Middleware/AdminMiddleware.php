@@ -15,16 +15,14 @@ class AdminMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        if (Auth::check()) {
-            if (Auth::user()->is_admin == '1') {
-                return $next($request);
-            } else {
-                return response()->json('you are not an admin');
-            }
-        } else {
-            return response()->json('please login first');
+        if (auth()->check() && auth()->user()->is_admin) {
+            return $next($request);
         }
+    
+        return response()->json(['error' => 'Unauthorized'], 403);
     }
+    
+    
 }

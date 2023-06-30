@@ -12,6 +12,9 @@ use App\Http\Controllers\percentage_of_location_controller;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\imageController;
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Middleware\AdminMiddleware;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,8 +33,18 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
-
+    Route::post('refresh', 'refresh');
 });
+////////////////////////////////////////////////////////////////////////
+
+Route::controller(AdminAuthController::class)->group(function () {
+  Route::post('Adminlogin', 'Adminlogin')->middleware('admin');
+    Route::post('Adminlogout', 'logout');
+});
+
+
+
+/////////////////////////////////////////////////////////////////////////
 //Route::post('forgot-password',[AuthController::class,'forgotPassword']);
 //Route::post('login', [AuthController::class, 'login']);
 Route::resource('posts',PostController::class);
@@ -45,8 +58,18 @@ Route::get('countPosts',[PostController::class,'countPosts']);
 
 Route::get('Userposts_id/{id}',[UserController::class,'usersPost_id']);
 Route::get('Userposts_login',[UserController::class,'usersPost_login']);
-Route::put('updateUserProfile/{id}',[UserController::class,'updateUserProfile']);
-Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);
+
+
+//Route::post('updateUserProfile', [UserController::class, 'updateUserProfile']);
+
+
+
+
+
+
+Route::post('updateUserProfile',[UserController::class,'updateUserProfile']);
+
+Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);//work
 Route::get('NewUsers',[UserController::class,'NewUsers']);
 Route::get('NewUsers2',[UserController::class,'NewUsers2']);
 Route::get('visitors',[UserController::class,'visitors']);
@@ -99,4 +122,4 @@ Route::get('unreadNotifications', [PostController::class,'unreadNotifications'])
 
 
 Route::get('image', [imageController::class,'sendimage']);
-Route::get('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);
+//Route::get('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);

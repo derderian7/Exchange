@@ -65,9 +65,6 @@ Route::get('getmyprofile',[UserController::class,'getmyprofile']);//work
 Route::get('getuserprofile/{id}',[UserController::class,'getuserprofile']);
 
 
-
-
-
 Route::post('report', [ReportController::class, 'store']);
 
 Route::post('exchange', [ExchangeController::class,'exchange']);
@@ -107,5 +104,5 @@ Route::group(['middleware' => ['isAdmin']], function () {
   Route::get('percentage_of_categories', [percentage_of_category_controller::class, 'percentage_of_categories']);
   
   });
-  
+
 //Route::get('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);

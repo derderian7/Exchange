@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use DB;
+use Exception;
+use Illuminate\Database\QueryException;
+
 class percentage_of_category_controller extends Controller
 {
     public function percentage_of_categories()
     {
+        try{
         $categories = ["clothes",
         "toys",
         "books",

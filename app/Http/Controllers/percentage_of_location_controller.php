@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Exception;
+use Illuminate\Database\QueryException;
 
 class percentage_of_location_controller extends Controller
 {
     public function percentage_of_locations()
     {
+        try{
         $locations = ["Aleppo",
         "Damascus",
         "Hama",
@@ -39,5 +42,10 @@ class percentage_of_location_controller extends Controller
             'status' => 'success',
             'data' => $result,
         ]);
+    }catch(QueryException $e){
+        return response()->json($e,500);
+      }catch(Exception $e){
+        return response()->json($e,500);
+      }
     }
 };

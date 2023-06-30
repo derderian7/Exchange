@@ -12,6 +12,9 @@ use App\Http\Controllers\percentage_of_location_controller;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\imageController;
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Middleware\AdminMiddleware;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,7 +34,21 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
+<<<<<<< HEAD
+=======
+    Route::post('refresh', 'refresh');
 });
+////////////////////////////////////////////////////////////////////////
+
+Route::controller(AdminAuthController::class)->group(function () {
+  Route::post('Adminlogin', 'Adminlogin')->middleware('admin');
+    Route::post('Adminlogout', 'logout');
+>>>>>>> d39e7a109bb3ff2a0ff79eadab2b9c9cf11fb0eb
+});
+
+
+
+/////////////////////////////////////////////////////////////////////////
 //Route::post('forgot-password',[AuthController::class,'forgotPassword']);
 //Route::post('login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth']], function () {
@@ -39,15 +56,43 @@ Route::get('post_status/{id}',[PostController::class,'edit_post_status']);
 Route::get('VisitedUserPosts/{id}',[PostController::class,'VisitedUserPosts']);
 Route::get('Userposts_id/{id}',[UserController::class,'usersPost_id']);
 Route::get('Userposts_login',[UserController::class,'usersPost_login']);
+<<<<<<< HEAD
 Route::put('updateUserProfile/{id}',[UserController::class,'updateUserProfile']);
 //Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);
+=======
+
+
+//Route::post('updateUserProfile', [UserController::class, 'updateUserProfile']);
+
+
+
+
+
+
+Route::post('updateUserProfile',[UserController::class,'updateUserProfile']);
+
+Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);//work
+Route::get('NewUsers',[UserController::class,'NewUsers']);
+Route::get('NewUsers2',[UserController::class,'NewUsers2']);
+Route::get('visitors',[UserController::class,'visitors']);
+>>>>>>> d39e7a109bb3ff2a0ff79eadab2b9c9cf11fb0eb
 Route::get('ShowUserProfile',[UserController::class,'ShowUserProfile']);
 Route::delete('destroy/{id}',[UserController::class,'destroy']);
 Route::delete('deleteImage/{id}',[UserController::class,'deleteImage']);
-Route::post('updateProfileImage/{id}',[UserController::class,'updateProfileImage']);
+//Route::post('updateProfileImage/{id}',[UserController::class,'updateProfileImage']);
 //Route::get('showProfile',[UserController::class,'showProfile']);
-Route::get('getmyprofile',[UserController::class,'getmyprofile']);
+Route::get('getmyprofile',[UserController::class,'getmyprofile']);//work
 Route::get('getuserprofile/{id}',[UserController::class,'getuserprofile']);
+<<<<<<< HEAD
+=======
+Route::get('GetAdmin',[UserController::class,'GetAdmin']);
+
+
+
+Route::get('percentage_of_locations', [percentage_of_location_controller::class, 'percentage_of_locations']);
+Route::get('percentage_of_categories', [percentage_of_category_controller::class, 'percentage_of_categories']);
+
+>>>>>>> d39e7a109bb3ff2a0ff79eadab2b9c9cf11fb0eb
 
 Route::post('report', [ReportController::class, 'store']);
 
@@ -76,6 +121,7 @@ Route::get('image', [imageController::class,'sendimage']);
 
 
 
+<<<<<<< HEAD
 Route::group(['middleware' => ['isAdmin']], function () {
 Route::get('show_report', [ReportController::class, 'index']);
 Route::get('report_count', [ReportController::class, 'getPosts']);
@@ -92,3 +138,7 @@ Route::get('visitors',[UserController::class,'visitors']);
 Route::get('percentage_of_location/{location_name}', [percentage_of_location_controller::class, 'percentage_of_location']);
 Route::get('percentage_of_categories/{id}', [percentage_of_category_controller::class, 'percentage_of_categories']);
 });
+=======
+Route::get('image', [imageController::class,'sendimage']);
+//Route::get('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);
+>>>>>>> d39e7a109bb3ff2a0ff79eadab2b9c9cf11fb0eb

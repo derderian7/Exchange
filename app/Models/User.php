@@ -26,6 +26,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'image',
+       // 'is_admin',
         
     ];
 
@@ -93,6 +94,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(ExchangeRequest::class, 'receiver_id');
     }
     
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
 
-
+    
 }

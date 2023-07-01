@@ -43,43 +43,6 @@ class UserController extends Controller
 
     
 
-<<<<<<< HEAD
-    public function updateUserProfile(Request $request, $id)
-    {
-        try{
-        $validator = Validator::make($request->all(), [
-            'name' => 'string|between:2,15',
-            'password' => 'string|min:6',
-            'location' => 'string|max:100',
-            
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-    
-        $userProfile = User::findOrFail($id);
-    
-        // Update name, password, and location
-        $userProfile->name = $request->input('name', $userProfile->name);
-        $userProfile->password = $request->input('password') ? Hash::make($request->input('password')) : $userProfile->password;
-        $userProfile->location = $request->input('location', $userProfile->location);
-    
-        // Update profile picture if provided
-        
-    
-        $userProfile->save();
-    
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User profile updated successfully',
-        ]);
-    }catch(QueryException $e){
-        return response()->json($e,500);
-      }catch(Exception $e){
-        return response()->json($e,500);
-      }
-=======
 
 public function updateUserProfile(Request $request)
 {
@@ -103,7 +66,6 @@ public function updateUserProfile(Request $request)
     // Update password if provided
     if ($request->has('password')) {
         $userProfile->password = Hash::make($request->password);
->>>>>>> d39e7a109bb3ff2a0ff79eadab2b9c9cf11fb0eb
     }
 
     // Update location if provided

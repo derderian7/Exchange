@@ -7,11 +7,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Notification;
 use App\Notifications\RealTimeNotification;
+use Exception;
+use Illuminate\Database\QueryException;
 
 class ExchangeController extends Controller
 {
     public function exchange(Request $request)
     {
+      try{
         // Perform some action to exchange the posts
         
         $user = User::findOrFail(auth()->user()->id);
@@ -35,5 +38,10 @@ class ExchangeController extends Controller
         //    $user->update(['suspended' => true]);
          //   return redirect()->route('suspended');
        // }
+      }catch(QueryException $e){
+        return response()->json($e,500);
+      }catch(Exception $e){
+        return response()->json($e,500);
+      }
     }
 }

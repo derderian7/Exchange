@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use DB;
 
 class percentage_of_location_controller extends Controller
 {

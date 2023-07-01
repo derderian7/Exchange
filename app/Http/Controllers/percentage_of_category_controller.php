@@ -31,5 +31,10 @@ class percentage_of_category_controller extends Controller
             'status' => 'success',
             'data' => $result,
         ]);
+    }catch(QueryException $e){
+        return response()->json($e,500);
+      }catch(Exception $e){
+        return response()->json($e,500);
+      }
     }
 };

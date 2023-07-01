@@ -9,22 +9,51 @@ use Illuminate\Support\Facades\Storage;
 use Validator;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
-use Notification;
-use App\Notifications\RealTimeNotification;
 
 class AuthController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->middleware('auth:api', ['except' => ['login','register','login_admin']]);
     }
 
-/**
-     * Log in .
-     */
-
-  
+    public function login_admin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+    
+        $credentials = $request->only('email', 'password');
+    
+        $token = Auth::attempt($credentials);
+        if (!$token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+    
+        $user = Auth::user();
+        if($user->is_admin ==1){
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+    }
+    else{
+        return response()->json('you are not an admin',403);
+    }
+}
     
 public function login(Request $request)
 {
@@ -88,7 +117,7 @@ public function forgotPassword(Request $request)
 
     
 
-/**
+    /**
      * Register .
      */
 

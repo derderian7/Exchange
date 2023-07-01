@@ -9,6 +9,8 @@ use Validator;
 use App\Events\NewNotification;
 use Notification;
 use App\Notifications\RealTimeNotification;
+use Exception;
+use Illuminate\Database\QueryException;
 
 class PostController extends Controller
 {
@@ -17,6 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        try{
         $posts = Post::join('users', 'posts.user_id', '=', 'users.id')
             ->select('posts.*', 'users.name as user_name', 'users.image as user_image')
             ->get();
@@ -31,6 +34,11 @@ class PostController extends Controller
             'status' => 'success',
             'data' => $posts,
         ]);
+    }catch(QueryException $e){
+        return response()->json($e,500);
+      }catch(Exception $e){
+        return response()->json($e,500);
+      }
     }
     
     
@@ -108,8 +116,14 @@ class PostController extends Controller
 
     public function show(string $id)
     {
+        try{
         $post=Post::findorfail($id)->get();
         return response()->json($post);
+    }catch(QueryException $e){
+        return response()->json($e,500);
+      }catch(Exception $e){
+        return response()->json($e,500);
+      }
     }
 
     /**
@@ -118,6 +132,7 @@ class PostController extends Controller
 
     public function edit_post_status(string $id)
     {
+        try{
         $post=Post::findorfail($id);
         $post_status=$post->post_status;
         if ($post_status==0){
@@ -139,6 +154,11 @@ class PostController extends Controller
             ]);
 
         }
+    }catch(QueryException $e){
+        return response()->json($e,500);
+      }catch(Exception $e){
+        return response()->json($e,500);
+      }
     }
 
     /**
@@ -146,6 +166,7 @@ class PostController extends Controller
      */
     public function update(Request $request,$id )
     {
+        try{
         $validator = Validator::make($request->all(), [
             'title' => 'string|between:2,100',
             'location' => 'string|max:100',
@@ -172,6 +193,11 @@ class PostController extends Controller
                 'status' => 'success',
                 'message' => 'UserProfile updated successfully',
             ]);   
+        }catch(QueryException $e){
+            return response()->json($e,500);
+          }catch(Exception $e){
+            return response()->json($e,500);
+          }
     }
 
     /**
@@ -179,6 +205,7 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
+        try{
         $post = Post::findOrFail($id);
     
         // Delete associated reports
@@ -191,6 +218,11 @@ class PostController extends Controller
             'status' => 'success',
             'message' => 'Post deleted successfully',
         ]);
+    }catch(QueryException $e){
+        return response()->json($e,500);
+      }catch(Exception $e){
+        return response()->json($e,500);
+      }
     }
     
     /*posts by specific user_id */
@@ -208,12 +240,17 @@ class PostController extends Controller
 
 public function countPostsByMonth()
 {
+    try{
     $postsByMonth = Post::countPostsByMonth();
     return response()->json([
         'status' => 'success',
         'data' => $postsByMonth,
     ]);
-    
+}catch(QueryException $e){
+    return response()->json($e,500);
+  }catch(Exception $e){
+    return response()->json($e,500);
+  }
     
 }
 
@@ -221,18 +258,24 @@ public function countPostsByMonth()
 
 public function countPosts()
 {
+    try{
     $count = Post::where('post_status', 1)->count();
     return response()->json([
         'status' => 'success',
         'data' => $count,
     ]);
-    
+}catch(QueryException $e){
+    return response()->json($e,500);
+  }catch(Exception $e){
+    return response()->json($e,500);
+  }
 }
 
 // recent transactions  
 
 public function RecentTransactions()
 {
+    try{
     $posts = Post::where('post_status', 1)
                 ->latest()
                 ->take(4)
@@ -243,10 +286,16 @@ public function RecentTransactions()
                     'status' => 'success',
                     'data' => $posts,
                 ]);
+            }catch(QueryException $e){
+                return response()->json($e,500);
+              }catch(Exception $e){
+                return response()->json($e,500);
+              }
 }
 
 public function exchange(Request $request, $postId)
 {
+    try{
     // Get the post that user1 wants to exchange
     $post = Post::find($postId);
   // Get the authenticated user
@@ -273,6 +322,11 @@ else{
         'status' => 'You are suspended',
     ]);
 }
+}catch(QueryException $e){
+    return response()->json($e,500);
+  }catch(Exception $e){
+    return response()->json($e,500);
+  }
 }
 
 /*
@@ -307,6 +361,7 @@ public function acceptExchange(Request $request, $postId)
 */
 public function completeExchange(Request $request, $postId)
 {
+    try{
     // Get the post that the user wants to exchange
     $post = Post::find($postId);
 
@@ -326,12 +381,16 @@ public function completeExchange(Request $request, $postId)
         // Return an error message if one or both of the posts are null
         return response()->json(['error' => 'One or both of the posts do not exist.'], 404);
     }
-
+}catch(QueryException $e){
+    return response()->json($e,500);
+  }catch(Exception $e){
+    return response()->json($e,500);
+  }
 }
 
 public function MarkAsRead_all (Request $request)
 {
-
+    try{
     $userUnreadNotification= auth()->user()->unreadNotifications;
 
     if($userUnreadNotification) {
@@ -340,6 +399,11 @@ public function MarkAsRead_all (Request $request)
             'success',200
         );
     }
+}catch(QueryException $e){
+    return response()->json($e,500);
+  }catch(Exception $e){
+    return response()->json($e,500);
+  }
 }
 
 public function unreadNotifications_count()

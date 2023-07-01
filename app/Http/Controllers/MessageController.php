@@ -6,11 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Pusher\Pusher;
 use Illuminate\Support\Facades\Storage;
+use Exception;
+use Illuminate\Database\QueryException;
+
 class MessageController extends Controller
 {
 
     public function store(Request $request)
     {
+        try{
         $request->validate([
             'receiver' => 'required|exists:users,id',
             'message' => 'required|string',
@@ -40,16 +44,28 @@ class MessageController extends Controller
         $pusher->trigger('exchange', 'new-message', $message);
     
         return response()->json(['message' => 'Message sent successfully'], 201);
+    }catch(QueryException $e){
+        return response()->json($e,500);
+      }catch(Exception $e){
+        return response()->json($e,500);
+      }
     }
     
     public function CountMsg()
     {
+        try{
         $count = Message::count();
         return response()->json([
             'status' => 'success',
             'data' => $count,
         ]);
-    }
     
+}catch(QueryException $e){
+    return response()->json($e,500);
+  }catch(Exception $e){
+    return response()->json($e,500);
+  }
+    
+}
 }
 

@@ -22,7 +22,7 @@ class testcontroller extends Controller
      */
     public function create()
     {
-        $x=5;
+        $y=8;
     }
 
     /**

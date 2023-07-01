@@ -13,6 +13,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\imageController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\AdminMiddleware;
 
 /*
@@ -104,5 +105,5 @@ Route::group(['middleware' => ['isAdmin']], function () {
   Route::get('percentage_of_categories', [percentage_of_category_controller::class, 'percentage_of_categories']);
   
   });
-
+  
 //Route::get('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);

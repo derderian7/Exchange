@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ExchangeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
@@ -61,12 +60,15 @@ Route::group(['middleware' => ['auth']], function () {
 // Post Controller
 Route::resource('posts',PostController::class);
 
+
+// Image Controller
+Route::post('updateProfileImage', [imageController::class, 'updateProfileImage']);
+Route::delete('deleteImage', [imageController::class, 'deleteImage']);
+
+
 // Report Controller
 Route::post('report', [ReportController::class, 'store']);
 
-
-//Message Controller
-Route::post('messages', [MessageController::class, 'store']);
 
 // Feedback Controller
 Route::post('feedback', [FeedbackController::class, 'store']);
@@ -93,7 +95,7 @@ Route::get('CountAllCategories', [CategoryController::class, 'CountAllCategories
 
 //Message Controller
 Route::get('CountMsg', [MessageController::class, 'CountMsg']);
-Route::get('store', [MessageController::class, 'store']);
+Route::post('messages', [MessageController::class, 'store']);
 
 
 

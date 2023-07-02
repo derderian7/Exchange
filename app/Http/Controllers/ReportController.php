@@ -60,7 +60,7 @@ class ReportController extends controller{
 */
 
 
-public function getPosts()
+public function CountReport()
 {
     try{
     $posts = DB::table('posts')

@@ -276,7 +276,7 @@ public function updateUserProfile(Request $request)
     }*/
 
 
-    public function getuserprofile(Request $request, $userId)///n need 
+    public function getuserprofile(Request $request, $userId)
     {
         try{
         $user = User::find($userId);

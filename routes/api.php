@@ -87,7 +87,7 @@ Route::get('image', [imageController::class,'sendimage']);
 
 
   Route::get('show_report', [ReportController::class, 'index']);
-  Route::get('report_count', [ReportController::class, 'getPosts']);
+  Route::get('report_count', [ReportController::class, 'CountReport']);
  
   Route::get('countPostsByMonth',[PostController::class,'countPostsByMonth']);
   Route::get('RecentTransactions',[PostController::class,'RecentTransactions']);
@@ -107,7 +107,5 @@ Route::get('image', [imageController::class,'sendimage']);
   
 
   
-//Route::get('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);
-////////////////////////////////////////////////////////////////////////////////
-//Admin:
-Route::get('ShowAllUsersProfile', [AdminController::class, 'ShowAllUsersProfile']);
+Route::post('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);
+Route::get('getWishlist', [WishlistController::class,'index']);

@@ -12,7 +12,7 @@ use App\Http\Controllers\percentage_of_location_controller;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\imageController;
-use App\Http\Controllers\AdminAuthController;
+//use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -31,18 +31,14 @@ use App\Http\Middleware\AdminMiddleware;
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('login_admin', 'login_admin');
-    Route::post('forgot-password', 'forgotPassword');
     Route::post('register', 'register');
     Route::post('logout', 'logout');
-    Route::post('refresh', 'refresh');
-    Route::post('refresh', 'refresh');
 });
 ////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////
-//Route::post('forgot-password',[AuthController::class,'forgotPassword']);
-//Route::post('login', [AuthController::class, 'login']);
+
 Route::group(['middleware' => ['auth']], function () {
 Route::get('post_status/{id}',[PostController::class,'edit_post_status']);
 Route::get('VisitedUserPosts/{id}',[PostController::class,'VisitedUserPosts']);

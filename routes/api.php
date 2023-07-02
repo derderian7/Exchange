@@ -12,7 +12,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\imageController;
-use App\Http\Controllers\AdminController;;
+use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\AdminMiddleware;
@@ -53,7 +53,7 @@ Route::get('Userposts_login',[UserController::class,'usersPost_login']);
 
 Route::post('updateUserProfile',[UserController::class,'updateUserProfile']);
 
-Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);//work
+Route::post('updateProfileImage',[imageController::class,'updateProfileImage']);//work
 Route::get('ShowUserProfile',[UserController::class,'ShowUserProfile']);
 Route::delete('destroy/{id}',[UserController::class,'destroy']);
 Route::delete('deleteImage/{id}',[UserController::class,'deleteImage']);

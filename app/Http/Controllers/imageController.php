@@ -45,9 +45,9 @@ class imageController extends Controller
         ]);
     }catch(QueryException $e){
         return response()->json($e,500);
-      }catch(Exception $e){
+    }catch(Exception $e){
         return response()->json($e,500);
-      }
+    }
     }
 
 
@@ -81,9 +81,9 @@ class imageController extends Controller
         ], 200);
     }catch(QueryException $e){
         return response()->json($e,500);
-      }catch(Exception $e){
+    }catch(Exception $e){
         return response()->json($e,500);
-      }
+    }
     }
     
 

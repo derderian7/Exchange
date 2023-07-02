@@ -37,8 +37,6 @@ class PostController extends Controller
         return response()->json($e,500);
     }
     }
-    
-    
 
     /**
      * Add new post.
@@ -89,9 +87,6 @@ class PostController extends Controller
     }
     
     
-    
-    
-
     /**
      * Display a specific post.
      */

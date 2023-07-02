@@ -160,7 +160,7 @@ public function updateUserProfile(Request $request)
         });
     
         return response()->json([
-            'success' => true,
+            'status' => 'success',
             'message' => 'Profile retrieved successfully!',
             'data' => $userInfo,
             'posts' => $posts,

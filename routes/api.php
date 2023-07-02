@@ -7,12 +7,13 @@ use App\Http\Controllers\ExchangeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\percentage_of_category_controller;
-use App\Http\Controllers\percentage_of_location_controller;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\imageController;
-//use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AdminController;;
+
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -56,7 +57,7 @@ Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);/
 Route::get('ShowUserProfile',[UserController::class,'ShowUserProfile']);
 Route::delete('destroy/{id}',[UserController::class,'destroy']);
 Route::delete('deleteImage/{id}',[UserController::class,'deleteImage']);
-//Route::post('updateProfileImage/{id}',[UserController::class,'updateProfileImage']);
+//Route::post('updateProfileImage/{id}',[imageController::class,'updateProfileImage']);
 //Route::get('showProfile',[UserController::class,'showProfile']);
 Route::get('getmyprofile',[UserController::class,'getmyprofile']);//work
 Route::get('getuserprofile/{id}',[UserController::class,'getuserprofile']);
@@ -95,14 +96,17 @@ Route::get('getWishlist', [WishlistController::class,'index']);
   Route::get('RecentTransactions',[PostController::class,'RecentTransactions']);
   Route::get('countPosts',[PostController::class,'countPosts']);
  
-  Route::get('GetAdmin',[UserController::class,'GetAdmin']);
-  Route::get('NewUsers',[UserController::class,'NewUsers']);
-  Route::get('NewUsers2',[UserController::class,'NewUsers2']);
-  Route::get('CountAllUsers',[UserController::class,'CountAllUsers']);
+  Route::get('GetAdmin',[AdminController::class,'GetAdmin']);
+  Route::get('NewUsers',[AdminController::class,'NewUsers']);
+  Route::get('NewUsers2',[AdminController::class,'NewUsers2']);
+  Route::get('CountAllUsers',[AdminController::class,'CountAllUsers']);
 
-  Route::get('percentage_of_locations', [percentage_of_location_controller::class, 'percentage_of_locations']);
-  Route::get('percentage_of_categories', [percentage_of_category_controller::class, 'percentage_of_categories']);
+  Route::get('percentage_of_locations', [LocationController::class, 'percentage_of_locations']);
+  Route::get('percentage_of_categories', [CategoryController::class, 'percentage_of_categories']);
+  Route::get('CountAllCategories', [CategoryController::class, 'CountAllCategories']);
+  Route::get('Count_of_locations', [LocationController::class, 'Count_of_locations']);
 
   Route::get('CountMsg', [MessageController::class, 'CountMsg']);
   
+
 

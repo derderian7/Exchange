@@ -18,14 +18,7 @@ class AdminController extends Controller
         $users = User::all();
 
         $result = $users->map(function ($user) {
-            $rating = Feedback::where('user_id', $user->id)->avg('rating');
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'rating' => $rating,
-                'location'=>$user->location
-            ];
+        Feedback::where('user_id', $user->id)->avg('rating');
         });
 
         return response()->json([

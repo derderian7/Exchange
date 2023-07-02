@@ -6,16 +6,13 @@ use App\Models\Post;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
-use App\Events\NewNotification;
-use Notification;
-use App\Notifications\RealTimeNotification;
 use Exception;
 use Illuminate\Database\QueryException;
 
 class PostController extends Controller
 {
     /**
-     * Display all posts.
+     * Display all posts with their users . 
      */
     public function index()
     {
@@ -36,25 +33,12 @@ class PostController extends Controller
         ]);
     }catch(QueryException $e){
         return response()->json($e,500);
-      }catch(Exception $e){
+    }catch(Exception $e){
         return response()->json($e,500);
-      }
+    }
     }
     
     
-    
-    
-    
-
-    
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Add new post.
@@ -105,14 +89,11 @@ class PostController extends Controller
     }
     
     
-        /*  return response()->json([
-            'status' => 'success',
-            'message' => 'Post added successfully',
-        ]);*/
+    
     
 
     /**
-     * Display a specified post.
+     * Display a specific post.
      */
 
     public function show(string $id)
@@ -127,40 +108,9 @@ class PostController extends Controller
     }
     }
 
-    /**
-     * Post availability.
-     */
+    
 
-    public function edit_post_status(string $id)
-    {
-        try{
-        $post=Post::findorfail($id);
-        $post_status=$post->post_status;
-        if ($post_status==0){
-            $post->update(['post_status'=>'1']);
-            
-            return response()->json([
-            'status' => 'success',
-            'message' => 'Posted on the ended page',
-            ]);
-        }
-        elseif ($post_status==1) {
-            DB::table('transaction')->insert([
-                'post_id' => $post,
-            ]);
-
-            return response()->json([
-            'status' => 'success',
-            'message' => 'Posted on the ending page',
-            ]);
-
-        }
-    }catch(QueryException $e){
-        return response()->json($e,500);
-    }catch(Exception $e){
-        return response()->json($e,500);
-    }
-    }
+    
 
     /**
      * Edit post .
@@ -182,7 +132,7 @@ class PostController extends Controller
             $location= $request->location ?? $posts->location;
             $description= $request->description ?? $posts->description;
             $requestData=$request->image ?? $posts->image;
-          // dd($x,$y,$z);
+        
             $posts->update([
                 'title'=>$title,
                 'location'=>$location,
@@ -221,78 +171,9 @@ class PostController extends Controller
         ]);
     }catch(QueryException $e){
         return response()->json($e,500);
-      }catch(Exception $e){
+    }catch(Exception $e){
         return response()->json($e,500);
-      }
     }
-    
-    /*posts by specific user_id */
-
-   /* public function VisitedUserPosts(string $id){
-        $posts = Post::where('user_id', $id)->get();
-        return response()->json([
-            'status' => 'success',
-            'data' => $posts,
-        ]);
-    }*/
-    
-    
-/*count posts by month */
-
-public function countPostsByMonth()
-{
-    try{
-    $postsByMonth = Post::countPostsByMonth();
-    return response()->json([
-        'status' => 'success',
-        'data' => $postsByMonth,
-    ]);
-}catch(QueryException $e){
-    return response()->json($e,500);
-  }catch(Exception $e){
-    return response()->json($e,500);
-  }
-    
-}
-
-// count how many exchange we have " total transactions" 
-
-public function countPosts()
-{
-    try{
-    $count = Post::where('post_status', 1)->count();
-    return response()->json([
-        'status' => 'success',
-        'data' => $count,
-    ]);
-}catch(QueryException $e){
-    return response()->json($e,500);
-  }catch(Exception $e){
-    return response()->json($e,500);
-  }
-}
-
-// recent transactions  
-
-public function RecentTransactions()
-{
-    try{
-    $posts = Post::where('post_status', 1)
-                ->latest()
-                ->take(4)
-                ->with('user')
-                ->get();
-    
-                return response()->json([
-                    'status' => 'success',
-                    'data' => $posts,
-                ]);
-            }catch(QueryException $e){
-                return response()->json($e,500);
-              }catch(Exception $e){
-                return response()->json($e,500);
-              }
-}
-
+    }
 
 }

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
         {
+
+            //add post to wishlist page .
+
             public function addToWishlist(Request $request, $postId)
             {
                 // Get the authenticated user
@@ -33,8 +36,9 @@ class WishlistController extends Controller
         
                 return response()->json(['message' => 'The post has been added to your wishlist'], 200);
             }
-           
+        
 
+            // show all the posts in the wishlist.
 
             public function index()
             {
@@ -52,7 +56,3 @@ class WishlistController extends Controller
             }
 }
 
-
-        
-    
-    

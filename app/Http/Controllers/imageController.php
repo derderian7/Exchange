@@ -8,7 +8,7 @@ use Illuminate\Database\QueryException;
 class imageController extends Controller
 {
 
-// 
+// edit the users profile image
 
     public function updateProfileImage(Request $request)
     {
@@ -49,6 +49,9 @@ class imageController extends Controller
         return response()->json($e,500);
       }
     }
+
+
+    // delete the user's profile image
     public function deleteImage(string $id)
     {
         try{

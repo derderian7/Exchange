@@ -12,6 +12,10 @@ use Illuminate\Database\QueryException;
 
 class ReportController extends controller{
 
+
+// make a report to a post 
+
+
     public function store(Request $request)
     {
         try{
@@ -29,6 +33,10 @@ class ReportController extends controller{
             return response()->json($e,500);
           }
     }
+
+    //show all the reports 
+
+
     public function index()
     {
         try{
@@ -43,22 +51,8 @@ class ReportController extends controller{
         return response()->json($e,500);
       }
     }
-  /*  public function report_count($id)
-{
-    $post = Post::find($id);
-    if (!$post) {
-        return response()->json(['status' => 'error', 'message' => 'Post not found'], 404);
-    }
 
-    $reportCount = $post->reports()->count();
-
-    return response()->json([
-        'status' => 'success',
-        'data' => $reportCount,
-    ]);
-}
-*/
-
+// show all the posts with their reports 
 
 public function CountReport()
 {
@@ -69,10 +63,10 @@ public function CountReport()
         ->select('posts.id', 'posts.title', 'users.name as user_name', DB::raw('count(reports.id) as report_count'))
         ->groupBy('posts.id', 'posts.title', 'users.name')
         ->get();
-       // dd($posts);
-       $posts = $posts->toArray();
+      
+      $posts = $posts->toArray();
 
-       return response()->json([
+      return response()->json([
         'success' => true,
         'message' => 'Posts retrieved successfully!',
         'data' => $posts

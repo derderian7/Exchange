@@ -87,32 +87,6 @@ public function login(Request $request)
         ]
     ]);
 }
-public function forgotPassword(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'email' => 'required|email',
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 422);
-    }
-
-    $response = Password::sendResetLink($request->only('email'), function (Message $message) {
-        $message->subject('Reset Password'); // Set the email subject
-    });
-
-    if ($response === Password::RESET_LINK_SENT) {
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Password reset link sent to your email',
-        ]);
-    } else {
-        throw ValidationException::withMessages([
-            'email' => [trans($response)],
-        ]);
-    }
-}
-
 
 
     
@@ -127,10 +101,11 @@ public function forgotPassword(Request $request)
              'name' => 'required|string|between:2,100',
              'email' => 'required|string|email|max:100|unique:users',
              'password' => 'required|string|min:6',
-         ]);
-     
-         if ($validator->fails()) {
-             return response()->json($validator->errors()->toJson(), 400);
+            
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
          }
      
          $requestData = $request->all();
@@ -149,6 +124,7 @@ public function forgotPassword(Request $request)
              'password' => Hash::make($request->password),
              'location' => $request->location,
              'image' => $requestData["image"],
+             'is_admin'=>$request->is_admin,
          ]);
      
          $token = auth()->login($user);
@@ -160,10 +136,10 @@ public function forgotPassword(Request $request)
              'authorization' => [
                  'token' => $token,
                  'type' => 'bearer',
-             ],
-         ]);
-     }
-     
+                ],
+            ]);
+    }
+    
 
     /**
      * Log out .
@@ -178,17 +154,7 @@ public function forgotPassword(Request $request)
         ]);
     }
 
-    // public function refresh()
-    // {
-    //     return response()->json([
-    //         'status' => 'success',
-    //         'user' => Auth::user(),
-    //         'authorisation' => [
-    //             'token' => Auth::refresh(),
-    //             'type' => 'bearer',
-    //         ]
-    //     ]);
-    // }
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 

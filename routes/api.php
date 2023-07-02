@@ -66,8 +66,7 @@ Route::post('updateProfileImage', [imageController::class, 'updateProfileImage']
 Route::delete('deleteImage/{id}', [imageController::class, 'deleteImage']);
 
 
-// Report Controller
-Route::post('report', [ReportController::class, 'store']);
+
 
 
 // Feedback Controller
@@ -81,8 +80,9 @@ Route::get('getWishlist', [WishlistController::class,'index']);
 
 //Report Controller
 Route::get('show_report', [ReportController::class, 'index']);
+Route::post('report', [ReportController::class, 'store']);
 Route::get('report_count', [ReportController::class, 'CountReport']);
-Route::get('store', [ReportController::class, 'store']);
+
 
 //Location Controller
 Route::get('percentage_of_locations', [LocationController::class, 'percentage_of_locations']);

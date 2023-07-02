@@ -15,10 +15,10 @@ return new class extends Migration
     Schema::create('messages', function (Blueprint $table) {
         $table->id();
         $table->bigInteger('sender', false, true);
-        $table->bigInteger('receiver', false, true); // Added nullable()
+        $table->bigInteger('receiver', false, true); 
         $table->text('message');
         $table->foreign('sender')->references('id')->on('users');
-        $table->foreign('receiver')->references('id')->on('users'); // Added nullable()
+        $table->foreign('receiver')->references('id')->on('users'); 
         $table->string('photo')->nullable();
         $table->timestamps();
     });

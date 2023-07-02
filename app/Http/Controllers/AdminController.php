@@ -37,7 +37,6 @@ class AdminController extends Controller
     }
     
 
-
 // return all admins users 
 public function GetAdmin()
     {

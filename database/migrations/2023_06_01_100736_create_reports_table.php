@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('post_id');
-   
             $table->timestamps();
-        
             $table->foreign('post_id')->references('id')->on('posts');
         });;
     }

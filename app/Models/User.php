@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -73,27 +72,6 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function requests(){
-        return $this->hasMany(Request::class,'user_id');
-    }
-
-
-
-
-
-    public function sentExchangeRequests(): HasMany
-    {
-        return $this->hasMany(ExchangeRequest::class, 'sender_id');
-    }
-
-    /**
-     * Get the exchange requests received by this user.
-     */
-    public function receivedExchangeRequests(): HasMany
-    {
-        return $this->hasMany(ExchangeRequest::class, 'receiver_id');
-    }
-    
     public function wishlist()
     {
         return $this->hasMany(Wishlist::class);

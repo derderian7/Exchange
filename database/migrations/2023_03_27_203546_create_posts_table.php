@@ -21,10 +21,9 @@ return new class extends Migration
                 $table->string('description');
                 $table->string('location');
                 $table->string('category');
-                $table->boolean('post_status')->default(0);
-                $table->string('image', 300)->nullable();
+                $table->string('image', 300);
                 $table->foreignId('user_id')->constrained('users');
-                //$table->foreignId('category_id')->nullable()->constrained('categories');
+                
                 $table->timestamps();
             });
         }

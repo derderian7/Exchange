@@ -21,7 +21,7 @@ class PostController extends Controller
     {
         try{
         $posts = Post::join('users', 'posts.user_id', '=', 'users.id')
-            ->select('posts.*', 'users.name as user_name', 'users.image as user_image')
+            ->select('posts.*', 'users.name as user_name', 'users.image as user_image','users.email as user_email')
             ->get();
     
         $posts->transform(function ($post) {

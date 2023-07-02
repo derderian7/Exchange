@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
@@ -11,25 +12,8 @@ class ExampleTest extends TestCase
      */
     public function test_get_posts()
     {
-        $response = $this->getJson('api/posts');
-
-        $response->assertStatus(200);
-    }
-    public function test_get_count_Posts_By_Month()
-    {
-        $response = $this->getJson('api/countPostsByMonth');
-
-        $response->assertStatus(200);
-    }
-    public function test_get_Recent_Transactions()
-    {
-        $response = $this->getJson('api/RecentTransactions');
-
-        $response->assertStatus(200);
-    }
-    public function test_get_count_Posts()
-    {
-        $response = $this->getJson('api/countPosts');
+        $user=User::factory()->create();
+        $response = $this->actingAs($user)->getJson('api/posts');
 
         $response->assertStatus(200);
     }

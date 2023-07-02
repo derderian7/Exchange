@@ -122,9 +122,9 @@ public function GetAdmin()
         ], 200);
     }catch(QueryException $e){
         return response()->json($e,500);
-      }catch(Exception $e){
+    }catch(Exception $e){
         return response()->json($e,500);
-      }
+    }
     }
     
 

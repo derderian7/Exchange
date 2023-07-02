@@ -88,39 +88,46 @@ public function login(Request $request)
     ]);
 }
 
+<<<<<<< HEAD
+=======
+
+    
+>>>>>>> bc9c2cd66158ac160a31271f3b4d06b636db260a
 
     /**
      * Register .
      */
 
-     public function register(Request $request)
-     {
-         $validator = Validator::make($request->all(), [
-             'name' => 'required|string|between:2,100',
-             'email' => 'required|string|email|max:100|unique:users',
-             'password' => 'required|string|min:6',
-         ]);
-     
-         if ($validator->fails()) {
-             return response()->json($validator->errors()->toJson(), 400);
-         }
-     
-         $requestData = $request->all();
-     
-         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-             $fileName = time() . $request->file('image')->getClientOriginalName();
-             $path = $request->file('image')->storeAs('images', $fileName, 'public');
-             $requestData["image"] = 'storage/' . $path;
-         } else {
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|between:2,100',
+            'email' => 'required|string|email|max:100|unique:users',
+            'password' => 'required|string|min:6',
+            
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+    
+        $requestData = $request->all();
+    
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $fileName = time() . $request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->storeAs('images', $fileName, 'public');
+            $requestData["image"] = 'storage/' . $path;
+        } else {
              $requestData["image"] = null; // Set the image to null if not provided
-         }
-     
-         $user = User::create([
-             'name' => $request->name,
-             'email' => $request->email,
+        }
+    
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
              'password' => Hash::make($request->password),
              'location' => $request->location,
              'image' => $requestData["image"],
+             'is_admin'=>$request->is_admin,
          ]);
      
          $token = auth()->login($user);
@@ -132,10 +139,10 @@ public function login(Request $request)
              'authorization' => [
                  'token' => $token,
                  'type' => 'bearer',
-             ],
-         ]);
-     }
-     
+                ],
+            ]);
+    }
+    
 
     /**
      * Log out .
@@ -150,6 +157,13 @@ public function login(Request $request)
         ]);
     }
 
+<<<<<<< HEAD
  
+=======
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+>>>>>>> bc9c2cd66158ac160a31271f3b4d06b636db260a
 
     }

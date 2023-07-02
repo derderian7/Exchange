@@ -23,7 +23,7 @@ return new class extends Migration
                 $table->string('category');
                 $table->boolean('post_status')->default(0);
                 $table->string('image', 300)->nullable();
-                $table->foreignId('user_id')->nullable()->constrained('users');
+                $table->foreignId('user_id')->constrained('users');
                 //$table->foreignId('category_id')->nullable()->constrained('categories');
                 $table->timestamps();
             });

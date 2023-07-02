@@ -63,7 +63,7 @@ Route::resource('posts',PostController::class);
 
 // Image Controller
 Route::post('updateProfileImage', [imageController::class, 'updateProfileImage']);
-Route::delete('deleteImage', [imageController::class, 'deleteImage']);
+Route::delete('deleteImage/{id}', [imageController::class, 'deleteImage']);
 
 
 // Report Controller

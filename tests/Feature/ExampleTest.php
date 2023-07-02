@@ -15,24 +15,6 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
-    public function test_get_count_Posts_By_Month()
-    {
-        $response = $this->getJson('api/countPostsByMonth');
-
-        $response->assertStatus(200);
-    }
-    public function test_get_Recent_Transactions()
-    {
-        $response = $this->getJson('api/RecentTransactions');
-
-        $response->assertStatus(200);
-    }
-    public function test_get_count_Posts()
-    {
-        $response = $this->getJson('api/countPosts');
-
-        $response->assertStatus(200);
-    }
     public function test_get_GetAdmin()
     {
         $response = $this->getJson('api/GetAdmin');

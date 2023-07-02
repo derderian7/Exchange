@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\Feedback;
 use App\Models\Post;
 use DB;
+use Exception;
+use Illuminate\Database\QueryException;
+
 class AdminController extends Controller
 {
     public function ShowAllUsersProfile()

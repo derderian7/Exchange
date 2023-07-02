@@ -100,6 +100,7 @@ Route::get('getWishlist', [WishlistController::class,'index']);
   Route::get('NewUsers',[AdminController::class,'NewUsers']);
   Route::get('NewUsers2',[AdminController::class,'NewUsers2']);
   Route::get('CountAllUsers',[AdminController::class,'CountAllUsers']);
+  Route::get('ShowAllUsersProfile',[AdminController::class,'ShowAllUsersProfile']);
 
   Route::get('percentage_of_locations', [LocationController::class, 'percentage_of_locations']);
   Route::get('percentage_of_categories', [CategoryController::class, 'percentage_of_categories']);

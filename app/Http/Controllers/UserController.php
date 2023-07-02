@@ -15,35 +15,9 @@ use Illuminate\Database\QueryException;
 
 class UserController extends Controller
 {
-    // get posts by the logged in user 
-    public function usersPost_login() {
-        try{
-        $posts = DB::table('posts')->where('user_id', auth()->id())->get();
-        return response()->json($posts);
-    }catch(QueryException $e){
-        return response()->json($e,500);
-    }catch(Exception $e){
-        return response()->json($e,500);
-    }
-    }
-    // get posts by the id of the user
-
-    public function usersPost_id($id) {
-        try{
-        $posts = DB::table('posts')->where('user_id', $id)->get();
-        return response()->json($posts);
-    }catch(QueryException $e){
-        return response()->json($e,500);
-      }catch(Exception $e){
-        return response()->json($e,500);
-      }
-    }
-
-    // edit user profile 
-
     
 
-
+    // edit user profile 
 public function updateUserProfile(Request $request)
 {
     $validator = Validator::make($request->all(), [
@@ -83,12 +57,6 @@ public function updateUserProfile(Request $request)
 }
 
 
-////////////////////////////////////
-    
-
-    
-    
-
     // delete user
 
     public function destroy(string $id)
@@ -102,27 +70,13 @@ public function updateUserProfile(Request $request)
         ]);
     }catch(QueryException $e){
         return response()->json($e,500);
-      }catch(Exception $e){
+    }catch(Exception $e){
         return response()->json($e,500);
-      }
+    }
     }
 
-    //show all users 
 
-    public function ShowUserProfile(){
-        try{
-        $user=user::all();
-        return response()->json([
-            'status' => 'success',
-            'data' => $user,
-        ]);
-    }catch(QueryException $e){
-        return response()->json($e,500);
-      }catch(Exception $e){
-        return response()->json($e,500);
-      }
-    }
-  
+    // get user profile with his posts by id
     public function getuserprofile(Request $request, $userId)
     {
         try{
@@ -167,14 +121,14 @@ public function updateUserProfile(Request $request)
         ], 200);
     }catch(QueryException $e){
         return response()->json($e,500);
-      }catch(Exception $e){
+    }catch(Exception $e){
         return response()->json($e,500);
-      }
+    }
     }
     
 
 
-
+// get the users profile and his posts that logged in
     public function getmyprofile(Request $request)
     {
         try{
@@ -200,9 +154,6 @@ public function updateUserProfile(Request $request)
             return $user;
         });
         
-
-
-
         $posts->transform(function ($post) {
             $post->image = url('storage/' . $post->image);
             return $post;
@@ -216,9 +167,9 @@ public function updateUserProfile(Request $request)
         ], 200);
     }catch(QueryException $e){
         return response()->json($e,500);
-      }catch(Exception $e){
+    }catch(Exception $e){
         return response()->json($e,500);
-      }
     }
-   
+    }
+
 }

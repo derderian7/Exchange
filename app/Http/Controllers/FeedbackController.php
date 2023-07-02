@@ -8,6 +8,9 @@ use Illuminate\Database\QueryException;
 
 class FeedbackController extends Controller
 {
+
+  // create a rating for an user 
+
     public function store(Request $request)
     {
         try{
@@ -27,6 +30,10 @@ class FeedbackController extends Controller
       }
     }
 
+
+// get the average rating for a specific user 
+
+
     public function getRating($userId)
     {
         try{
@@ -39,6 +46,10 @@ class FeedbackController extends Controller
         return response()->json($e,500);
       }
     }
+
+
+// Get rating for the currently authenticated user
+
 
     public function getMyRating()
 {

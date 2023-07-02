@@ -10,23 +10,30 @@ use Illuminate\Database\QueryException;
 
 class CategoryController extends Controller
 {
-    public function percentage_of_categories()
-    {
-        try{
-        $categories = ["clothes",
-        "toys",
-        "books",
-        "electronic",
-        "furniture"
-      ]; 
-        $result = [];
 
+    // get the percentage of each catogery for all posts
+public function percentage_of_categories()
+{
+    try {
+        $categories = [
+            "clothes",
+            "toys",
+            "books",
+            "electronic",
+            "furniture"
+        ]; 
+
+        $result = [];
         $totalPosts = Post::count();
+
+        if ($totalPosts == 0) {
+            throw new Exception('No posts found.');
+        }
 
         foreach ($categories as $category) {
             $categoryPosts = Post::where('category', $category)->count();
             $percentage = ($categoryPosts / $totalPosts);
-            $roundedPercentage = round($percentage * 100, 2);
+              $roundedPercentage = round($percentage * 100, 2);
 
             $result[$category] = $roundedPercentage;
         }
@@ -35,13 +42,13 @@ class CategoryController extends Controller
             'status' => 'success',
             'data' => $result,
         ]);
-    }catch(QueryException $e){
-        return response()->json($e,500);
-      }catch(Exception $e){
-        return response()->json($e,500);
-      }
+    } catch(QueryException $e) {
+        return response()->json($e, 500);
+    } catch(Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
-
+}
+// count the number of categories 
     public function CountAllCategories()
     {
         try{
@@ -50,8 +57,8 @@ class CategoryController extends Controller
         "books",
         "electronic",
         "furniture"
-      ]; 
-      $count = count($categories);
+    ]; 
+    $count = count($categories);
 
         return response()->json([
             'status' => 'success',
@@ -59,9 +66,9 @@ class CategoryController extends Controller
         ]);
     }catch(QueryException $e){
         return response()->json($e,500);
-      }catch(Exception $e){
+    }catch(Exception $e){
         return response()->json($e,500);
-      }
+    }
     }
 
     

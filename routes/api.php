@@ -57,7 +57,7 @@ Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);/
 Route::get('ShowUserProfile',[UserController::class,'ShowUserProfile']);
 Route::delete('destroy/{id}',[UserController::class,'destroy']);
 Route::delete('deleteImage/{id}',[UserController::class,'deleteImage']);
-//Route::post('updateProfileImage/{id}',[UserController::class,'updateProfileImage']);
+//Route::post('updateProfileImage/{id}',[imageController::class,'updateProfileImage']);
 //Route::get('showProfile',[UserController::class,'showProfile']);
 Route::get('getmyprofile',[UserController::class,'getmyprofile']);//work
 Route::get('getuserprofile/{id}',[UserController::class,'getuserprofile']);
@@ -93,10 +93,10 @@ Route::get('image', [imageController::class,'sendimage']);
   Route::get('RecentTransactions',[PostController::class,'RecentTransactions']);
   Route::get('countPosts',[PostController::class,'countPosts']);
  
-  Route::get('GetAdmin',[UserController::class,'GetAdmin']);
-  Route::get('NewUsers',[UserController::class,'NewUsers']);
-  Route::get('NewUsers2',[UserController::class,'NewUsers2']);
-  Route::get('CountAllUsers',[UserController::class,'CountAllUsers']);
+  Route::get('GetAdmin',[AdminController::class,'GetAdmin']);
+  Route::get('NewUsers',[AdminController::class,'NewUsers']);
+  Route::get('NewUsers2',[AdminController::class,'NewUsers2']);
+  Route::get('CountAllUsers',[AdminController::class,'CountAllUsers']);
 
   Route::get('percentage_of_locations', [LocationController::class, 'percentage_of_locations']);
   Route::get('percentage_of_categories', [CategoryController::class, 'percentage_of_categories']);

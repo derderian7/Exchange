@@ -88,11 +88,8 @@ public function login(Request $request)
     ]);
 }
 
-<<<<<<< HEAD
-=======
 
     
->>>>>>> bc9c2cd66158ac160a31271f3b4d06b636db260a
 
     /**
      * Register .
@@ -157,13 +154,9 @@ public function login(Request $request)
         ]);
     }
 
-<<<<<<< HEAD
- 
-=======
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
->>>>>>> bc9c2cd66158ac160a31271f3b4d06b636db260a
 
     }

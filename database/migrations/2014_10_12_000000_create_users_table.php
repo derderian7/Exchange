@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('is_admin')->default('0');
+            $table->integer('is_admin')->default('0')->nullable();
             $table->string('location')->nullable();
             $table->string('image', 300)->nullable();
             $table->integer('is_suspended')->default('0');

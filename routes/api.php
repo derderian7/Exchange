@@ -7,12 +7,13 @@ use App\Http\Controllers\ExchangeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\percentage_of_category_controller;
-use App\Http\Controllers\percentage_of_location_controller;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\imageController;
-//use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AdminController;;
+
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -97,11 +98,16 @@ Route::get('image', [imageController::class,'sendimage']);
   Route::get('NewUsers2',[UserController::class,'NewUsers2']);
   Route::get('CountAllUsers',[UserController::class,'CountAllUsers']);
 
-  Route::get('percentage_of_locations', [percentage_of_location_controller::class, 'percentage_of_locations']);
-  Route::get('percentage_of_categories', [percentage_of_category_controller::class, 'percentage_of_categories']);
+  Route::get('percentage_of_locations', [LocationController::class, 'percentage_of_locations']);
+  Route::get('percentage_of_categories', [CategoryController::class, 'percentage_of_categories']);
+  Route::get('CountAllCategories', [CategoryController::class, 'CountAllCategories']);
+  Route::get('Count_of_locations', [LocationController::class, 'Count_of_locations']);
 
   Route::get('CountMsg', [MessageController::class, 'CountMsg']);
   
 
   
 //Route::get('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);
+////////////////////////////////////////////////////////////////////////////////
+//Admin:
+Route::get('ShowAllUsersProfile', [AdminController::class, 'ShowAllUsersProfile']);

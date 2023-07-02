@@ -88,7 +88,7 @@ Route::resource('posts',PostController::class);
 Route::get('image', [imageController::class,'sendimage']);
 });
 
-Route::group(['middleware' => ['isAdmin']], function () {
+Route::group(['middleware' => ['admin']], function () {
   Route::get('show_report', [ReportController::class, 'index']);
   Route::get('report_count', [ReportController::class, 'getPosts']);
  

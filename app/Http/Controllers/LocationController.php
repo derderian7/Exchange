@@ -9,51 +9,51 @@ use Illuminate\Database\QueryException;
 
 class LocationController extends Controller
 {
-  public function percentage_of_locations()
-  {
-      try {
-          $locations = [
-              "Aleppo",
-              "Damascus",
-              "Hama",
-              "Tartus",
-              "Latakia",
-              "Idlib",
-              "Homs",
-              "Deir Ez-Zor",
-              "Daraa",
-              "As-Suwayda",
-              "Raqqa",
-              "Quneitra",
-              "Al-Hasakah",
-              "Rif Dimashq"
-          ]; 
-  
-          $result = [];
-          $totalPosts = Post::count();
-  
-          if ($totalPosts == 0) {
-              throw new Exception('No posts found.');
-          }
-  
-          foreach ($locations as $location) {
-              $locationPosts = Post::where('location', $location)->count();
-              $percentage = ($locationPosts / $totalPosts);
+public function percentage_of_locations()
+{
+    try {
+        $locations = [
+            "Aleppo",
+            "Damascus",
+            "Hama",
+            "Tartus",
+            "Latakia",
+            "Idlib",
+            "Homs",
+            "Deir Ez-Zor",
+            "Daraa",
+            "As-Suwayda",
+            "Raqqa",
+            "Quneitra",
+            "Al-Hasakah",
+            "Rif Dimashq"
+        ]; 
+
+        $result = [];
+        $totalPosts = Post::count();
+
+        if ($totalPosts == 0) {
+            throw new Exception('No posts found.');
+        }
+
+        foreach ($locations as $location) {
+            $locationPosts = Post::where('location', $location)->count();
+            $percentage = ($locationPosts / $totalPosts);
               $roundedPercentage = round($percentage * 100, 2);
-  
-              $result[$location] = $roundedPercentage;
-          }
-  
-          return response()->json([
-              'status' => 'success',
-              'data' => $result,
-          ]);
-      } catch(QueryException $e) {
-          return response()->json($e, 500);
-      } catch(Exception $e) {
-          return response()->json(['error' => $e->getMessage()], 500);
-      }
-  }
+
+            $result[$location] = $roundedPercentage;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $result,
+        ]);
+    } catch(QueryException $e) {
+        return response()->json($e, 500);
+    } catch(Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
 
     public function Count_of_locations()
     {
@@ -74,7 +74,7 @@ class LocationController extends Controller
         "Rif Dimashq"]; 
         $result = [];
 
-        $totalPosts = Post::count();
+        
 
         foreach ($locations as $location) {
             $locationPosts = Post::where('location', $location)->count();
@@ -89,9 +89,9 @@ class LocationController extends Controller
         ]);
     }catch(QueryException $e){
         return response()->json($e,500);
-      }catch(Exception $e){
+    }catch(Exception $e){
         return response()->json($e,500);
-      }
+    }
     }
 
 };

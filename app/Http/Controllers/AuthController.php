@@ -18,6 +18,8 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login','register','login_admin']]);
     }
 
+// login for the admin only
+
     public function login_admin(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -54,7 +56,8 @@ class AuthController extends Controller
         return response()->json('you are not an admin',403);
     }
 }
-    
+    // login for users
+
 public function login(Request $request)
 {
     $validator = Validator::make($request->all(), [
@@ -91,9 +94,9 @@ public function login(Request $request)
 
     
 
-    /**
-     * Register .
-     */
+    
+     // Register . 
+    
 
     public function register(Request $request)
     {
@@ -121,29 +124,27 @@ public function login(Request $request)
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-             'password' => Hash::make($request->password),
-             'location' => $request->location,
-             'image' => $requestData["image"],
-             'is_admin'=>$request->is_admin,
-         ]);
-     
-         $token = auth()->login($user);
-     
-         return response()->json([
-             'status' => 'success',
-             'message' => 'User created successfully',
-             'user' => $user,
-             'authorization' => [
-                 'token' => $token,
-                 'type' => 'bearer',
+            'password' => Hash::make($request->password),
+            'location' => $request->location,
+            'image' => $requestData["image"],
+            'is_admin'=>$request->is_admin,
+        ]);
+    
+        $token = auth()->login($user);
+    
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User created successfully',
+            'user' => $user,
+            'authorization' => [
+            'token' => $token,
+            'type' => 'bearer',
                 ],
             ]);
     }
     
 
-    /**
-     * Log out .
-     */
+    //Logout
 
     public function logout()
     {
@@ -153,10 +154,5 @@ public function login(Request $request)
             'message' => 'Successfully logged out',
         ]);
     }
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     }

@@ -10,37 +10,42 @@ use Illuminate\Database\QueryException;
 
 class CategoryController extends Controller
 {
-    public function percentage_of_categories()
-    {
-        try{
-        $categories = ["clothes",
-        "toys",
-        "books",
-        "electronic",
-        "furniture"
-      ]; 
-        $result = [];
-
-        $totalPosts = Post::count();
-
-        foreach ($categories as $category) {
-            $categoryPosts = Post::where('category', $category)->count();
-            $percentage = ($categoryPosts / $totalPosts);
-            $roundedPercentage = round($percentage * 100, 2);
-
-            $result[$category] = $roundedPercentage;
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $result,
-        ]);
-    }catch(QueryException $e){
-        return response()->json($e,500);
-      }catch(Exception $e){
-        return response()->json($e,500);
+public function percentage_of_categories()
+{
+    try {
+        $categories = [
+              "clothes",
+              "toys",
+              "books",
+              "electronic",
+              "furniture"
+          ]; 
+  
+          $result = [];
+          $totalPosts = Post::count();
+  
+          if ($totalPosts == 0) {
+              throw new Exception('No posts found.');
+          }
+  
+          foreach ($categories as $category) {
+              $categoryPosts = Post::where('category', $category)->count();
+              $percentage = ($categoryPosts / $totalPosts);
+              $roundedPercentage = round($percentage * 100, 2);
+  
+              $result[$category] = $roundedPercentage;
+          }
+  
+          return response()->json([
+              'status' => 'success',
+              'data' => $result,
+          ]);
+      } catch(QueryException $e) {
+          return response()->json($e, 500);
+      } catch(Exception $e) {
+          return response()->json(['error' => $e->getMessage()], 500);
       }
-    }
+  }
 
     public function CountAllCategories()
     {

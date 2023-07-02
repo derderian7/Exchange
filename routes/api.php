@@ -12,7 +12,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\imageController;
-use App\Http\Controllers\AdminController;;
+use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\AdminMiddleware;
@@ -60,12 +60,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 // Post Controller
 Route::resource('posts',PostController::class);
-
-
-// Image Controller
-Route::delete('deleteImage/{id}',[UserController::class,'deleteImage']);
-Route::post('updateProfileImage',[UserController::class,'updateProfileImage']);
-
 
 // Report Controller
 Route::post('report', [ReportController::class, 'store']);

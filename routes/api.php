@@ -84,7 +84,7 @@ Route::resource('posts',PostController::class);
 Route::get('image', [imageController::class,'sendimage']);
 });
 
-Route::group(['middleware' => ['admin']], function () {
+
   Route::get('show_report', [ReportController::class, 'index']);
   Route::get('report_count', [ReportController::class, 'getPosts']);
  
@@ -95,13 +95,13 @@ Route::group(['middleware' => ['admin']], function () {
   Route::get('GetAdmin',[UserController::class,'GetAdmin']);
   Route::get('NewUsers',[UserController::class,'NewUsers']);
   Route::get('NewUsers2',[UserController::class,'NewUsers2']);
-  Route::get('visitors',[UserController::class,'visitors']);
+  Route::get('CountAllUsers',[UserController::class,'CountAllUsers']);
 
   Route::get('percentage_of_locations', [percentage_of_location_controller::class, 'percentage_of_locations']);
   Route::get('percentage_of_categories', [percentage_of_category_controller::class, 'percentage_of_categories']);
 
   Route::get('CountMsg', [MessageController::class, 'CountMsg']);
   
-  });
+
   
 //Route::get('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);

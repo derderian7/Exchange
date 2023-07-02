@@ -208,20 +208,21 @@ public function updateUserProfile(Request $request)
 
     //count users with no exchange 
     
-    public function visitors(){
-        try{
-            $userCount = DB::table('users')->whereNotIn('id', function($query) {
-                    $query->select('user_id')
-                        ->from('posts')
-                        ->where('post_status', 0);
-                })->count();
-                return response()->json($userCount);
-            }catch(QueryException $e){
-                return response()->json($e,500);
-              }catch(Exception $e){
-                return response()->json($e,500);
-              }
+    public function CountAllUsers()
+{
+    try {
+        $userCount = User::count();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => ['userCount' => $userCount],
+        ]);
+    } catch (QueryException $e) {
+        return response()->json($e, 500);
+    } catch (Exception $e) {
+        return response()->json($e, 500);
     }
+}
 
     public function deleteImage(string $id)
 {

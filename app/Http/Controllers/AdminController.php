@@ -71,11 +71,11 @@ public function GetAdmin()
     {
         try {
             $userCount = User::count();
-    
             return response()->json([
                 'status' => 'success',
-                'data' => ['userCount' => $userCount],
-            ]);
+                'data' => $userCount,
+                ]
+            );
         } catch (QueryException $e) {
             return response()->json($e, 500);
         } catch (Exception $e) {

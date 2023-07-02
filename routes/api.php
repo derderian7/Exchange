@@ -67,13 +67,13 @@ Route::post('report', [ReportController::class, 'store']);
 Route::post('exchange', [ExchangeController::class,'exchange']);
 
 Route::post('messages', [MessageController::class, 'store']);
-Route::get('CountMsg', [MessageController::class, 'CountMsg']);
+
 
 Route::post('feedback', [FeedbackController::class, 'store']);
 Route::get('rating/{userId}', [FeedbackController::class, 'getRating']);
 Route::get('getMyRating', [FeedbackController::class, 'getMyRating']);
 
-//Route::post('posts/{postId}/exchange', [PostController::class,'exchange']);
+
 Route::post('posts/{postId}/acceptExchange', [PostController::class,'acceptExchange']);
 Route::post('posts/{postId}/complete-exchange', [PostController::class,'completeExchange']);
 Route::get('MarkAsRead_all',[PostController::class,'MarkAsRead_all']);
@@ -84,7 +84,7 @@ Route::resource('posts',PostController::class);
 Route::get('image', [imageController::class,'sendimage']);
 });
 
-Route::group(['middleware' => ['isAdmin']], function () {
+Route::group(['middleware' => ['admin']], function () {
   Route::get('show_report', [ReportController::class, 'index']);
   Route::get('report_count', [ReportController::class, 'getPosts']);
  
@@ -99,6 +99,8 @@ Route::group(['middleware' => ['isAdmin']], function () {
 
   Route::get('percentage_of_locations', [percentage_of_location_controller::class, 'percentage_of_locations']);
   Route::get('percentage_of_categories', [percentage_of_category_controller::class, 'percentage_of_categories']);
+
+  Route::get('CountMsg', [MessageController::class, 'CountMsg']);
   
   });
   

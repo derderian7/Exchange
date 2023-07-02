@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\Feedback;
 use App\Models\Post;
 use DB;
+use Exception;
+use Illuminate\Database\QueryException;
+
 class AdminController extends Controller
 {
     public function ShowAllUsersProfile()
@@ -15,14 +18,7 @@ class AdminController extends Controller
         $users = User::all();
 
         $result = $users->map(function ($user) {
-            $rating = Feedback::where('user_id', $user->id)->avg('rating');
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'rating' => $rating,
-                'location'=>$user->location
-            ];
+        Feedback::where('user_id', $user->id)->avg('rating');
         });
 
         return response()->json([

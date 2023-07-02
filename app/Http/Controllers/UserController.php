@@ -129,11 +129,11 @@ public function updateUserProfile(Request $request)
 
 
 // get the users profile and his posts that logged in
-    public function getmyprofile(Request $request)
-    {
-        try{
+public function getMyProfile(Request $request)
+{
+    try {
         $user = $request->user();
-    
+
         $userInfo = DB::table('users')
             ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
             ->leftJoin('feedbacks', 'users.id', '=', 'feedbacks.user_id')
@@ -144,32 +144,33 @@ public function updateUserProfile(Request $request)
             )
             ->where('users.id', $user->id)
             ->groupBy('users.name', 'users.image')
-            ->get();
-    
+            ->first(); // Retrieve the first matching user profile
+
         $posts = Post::where('user_id', $user->id)->get();
 
-        
-        $userInfo->transform(function ($user) {
-            $user->user_image = url('storage/' . $user->user_image);
-            return $user;
-        });
-        
+        if ($userInfo) {
+            $userInfo->user_image = url('storage/' . $userInfo->user_image);
+        }
+
         $posts->transform(function ($post) {
             $post->image = url('storage/' . $post->image);
             return $post;
         });
-    
-        return response()->json([
+
+        $responseData = [
             'success' => true,
             'message' => 'Profile retrieved successfully!',
             'data' => $userInfo,
-            'posts' => $posts,
-        ], 200);
-    }catch(QueryException $e){
-        return response()->json($e,500);
-    }catch(Exception $e){
-        return response()->json($e,500);
+            'posts' => $posts
+        ];
+
+        return response()->json($responseData, 200);
+    } catch (QueryException $e) {
+        return response()->json($e, 500);
+    } catch (Exception $e) {
+        return response()->json($e, 500);
     }
-    }
+}
+
 
 }

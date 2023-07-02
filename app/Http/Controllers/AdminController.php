@@ -13,26 +13,29 @@ use Illuminate\Database\QueryException;
 class AdminController extends Controller
 {
     // display all users with their rating 
-    public function ShowAllUsersProfile()
-{
-    try {
-        $users = User::all();
-
-        $result = $users->map(function ($user) {
-        Feedback::where('user_id', $user->id)->avg('rating');
-        });
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $result,
-        ]);
-
-    } catch(QueryException $e) {
-        return response()->json($e, 500);
-    } catch(Exception $e) {
-        return response()->json($e, 500);
+    public function showAllUsersProfile()
+    {
+        try {
+            $users = User::all();
+    
+            $result = $users->map(function ($user) {
+                $averageRating = Feedback::where('user_id', $user->id)->avg('rating');
+                $user->average_rating = $averageRating; // Add average_rating property to the user object
+                return $user;
+            });
+    
+            return response()->json([
+                'status' => 'success',
+                'data' => $result,
+            ]);
+    
+        } catch(QueryException $e) {
+            return response()->json($e, 500);
+        } catch(Exception $e) {
+            return response()->json($e, 500);
+        }
     }
-}
+    
 
 
 // return all admins users 

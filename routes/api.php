@@ -82,6 +82,9 @@ Route::get('unreadNotifications', [PostController::class,'unreadNotifications'])
 Route::resource('posts',PostController::class);
 
 Route::get('image', [imageController::class,'sendimage']);
+  
+Route::post('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);
+Route::get('getWishlist', [WishlistController::class,'index']);
 });
 
 
@@ -103,6 +106,3 @@ Route::get('image', [imageController::class,'sendimage']);
   Route::get('CountMsg', [MessageController::class, 'CountMsg']);
   
 
-  
-Route::post('addToWishlist/{post_id}', [WishlistController::class,'addToWishlist']);
-Route::get('getWishlist', [WishlistController::class,'index']);

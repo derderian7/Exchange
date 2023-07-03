@@ -12,9 +12,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\imageController;
 use App\Http\Controllers\AdminController;
-
 use App\Http\Controllers\WishlistController;
-use App\Http\Middleware\AdminMiddleware;
 
 /*
 |--------------------------------------------------------------------------

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Post;
-use DB;
 use Exception;
 use Illuminate\Database\QueryException;
 

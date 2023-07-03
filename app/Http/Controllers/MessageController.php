@@ -5,7 +5,6 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Pusher\Pusher;
-use Illuminate\Support\Facades\Storage;
 use Exception;
 use Illuminate\Database\QueryException;
 

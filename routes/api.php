@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
@@ -38,7 +37,7 @@ Route::controller(AuthController::class)->group(function () {
 
 /////////////////////////////////////////////////////////////////////////
 
-//Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth']], function () {
 
 // Admin Controller 
   Route::get('showAllUsersProfile',[AdminController::class,'showAllUsersProfile']);
@@ -46,7 +45,7 @@ Route::controller(AuthController::class)->group(function () {
   Route::get('NewUsers',[AdminController::class,'NewUsers']);
   Route::get('CountAllUsers',[AdminController::class,'CountAllUsers']);
   Route::get('getadminprofile',[AdminController::class,'getadminprofile']);
-  
+
 
   // User Controller
   Route::post('updateUserProfile',[UserController::class,'updateUserProfile']);
@@ -95,27 +94,4 @@ Route::get('CountAllCategories', [CategoryController::class, 'CountAllCategories
 Route::get('CountMsg', [MessageController::class, 'CountMsg']);
 Route::post('messages', [MessageController::class, 'store']);
 
-
-
-
-
-
-
-
-//});
-
-
-
-
-
-
-  
-
-  
-  
-  
-
-
-  
-
-
+});

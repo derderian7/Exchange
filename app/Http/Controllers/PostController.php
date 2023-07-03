@@ -126,18 +126,19 @@ class PostController extends Controller
             $title= $request->title ?? $posts->title;
             $location= $request->location ?? $posts->location;
             $description= $request->description ?? $posts->description;
-            $requestData=$request->image ?? $posts->image;
-        
-            $posts->update([
-                'title'=>$title,
-                'location'=>$location,
-                'description'=> $description,
-                'image'=>$requestData["image"],
+            $requestData = $request->image ?? [];
+            $image = array_key_exists('image', $requestData) ? $requestData['image'] : $posts->image;
             
+            $posts->update([
+                'title' => $title,
+                'location' => $location,
+                'description' => $description,
+                'image' => $image,
             ]);
+            
             return response()->json([
                 'status' => 'success',
-                'message' => 'UserProfile updated successfully',
+                'message' => 'post updated successfully',
             ]);   
         }catch(QueryException $e){
             return response()->json($e,500);

@@ -10,8 +10,8 @@ class ExampleTest extends TestCase
 {
     public function test_get_GetAdmin()
     {
-        
-        $response = $this->getJson('api/GetAdmin');
+        $user=User::factory()->create();
+        $response = $this->getJson('/api/GetAdmin');
 
         $response->assertStatus(200);
     }
@@ -21,11 +21,12 @@ class ExampleTest extends TestCase
         $user=User::factory()->create();
         $response = $this->actingAs($user)->getJson('api/show_report');
         $response->assertStatus(200);
+        $response->assertJsonCount(10);
     }
     public function test_get_report_count()
     {
         $user=User::factory()->create();
-        $response = $this->actingAs($user)->getJson('api/report_count');
+        $response = $this->actingAs($user)->getJson('/api/report_count');
 
         $response->assertStatus(200);
     }

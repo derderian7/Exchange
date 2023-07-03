@@ -10,8 +10,8 @@ class ExampleTest extends TestCase
 {
     public function test_get_GetAdmin()
     {
-        $user=User::factory()->create();
-        $response = $this->actingAs($user)->getJson('api/GetAdmin');
+        
+        $response = $this->getJson('api/GetAdmin');
 
         $response->assertStatus(200);
     }
@@ -76,6 +76,12 @@ class ExampleTest extends TestCase
         $user=User::factory()->create();
         $response = $this->actingAs($user)->getJson('api/percentage_of_locations');
 
+        $response->assertStatus(200);
+    }
+    public function test_get_CountAllCategories()
+    {
+        $user=User::factory()->create();
+        $response = $this->actingAs($user)->getJson('api/CountAllCategories');
         $response->assertStatus(200);
     }
     

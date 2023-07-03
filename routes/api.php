@@ -38,7 +38,7 @@ Route::controller(AuthController::class)->group(function () {
 
 /////////////////////////////////////////////////////////////////////////
 
-Route::group(['middleware' => ['auth']], function () {
+//Route::group(['middleware' => ['auth']], function () {
 
 // Admin Controller 
   Route::get('showAllUsersProfile',[AdminController::class,'showAllUsersProfile']);
@@ -102,7 +102,7 @@ Route::post('messages', [MessageController::class, 'store']);
 
 
 
-});
+//});
 
 
 

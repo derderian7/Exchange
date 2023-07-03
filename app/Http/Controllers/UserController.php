@@ -156,22 +156,17 @@ public function getMyProfile(Request $request)
             $post->image = url('storage/' . $post->image);
             return $post;
         });
-<<<<<<< HEAD
-
-        $responseData = [
-            'success' => true,
-=======
     
         return response()->json([
             'status' => 'success',
->>>>>>> edb96446e4ec11af135e58140761828d2e8a2d3b
             'message' => 'Profile retrieved successfully!',
             'data' => $userInfo,
             'posts' => $posts
-        ];
+        ]);
 
-        return response()->json($responseData, 200);
-    } catch (QueryException $e) {
+       
+    } 
+    catch (QueryException $e) {
         return response()->json($e, 500);
     } catch (Exception $e) {
         return response()->json($e, 500);

@@ -13,23 +13,31 @@ class ReportController extends controller{
 
 // make a report to a post 
 
+<<<<<<< HEAD
+
+public function store($postId)
+{
+    try {
+=======
     public function store(Request $request)
     {
         try{
+>>>>>>> ab88397cb7746c4917726d9aeedff24d83551d69
         $report = Report::create([
-            'post_id' => $request->post_id,
-            
+            'post_id' => $postId,
         ]);
+
         return response()->json([
             'status' => 'success',
-            'message' => 'report stored successfully',
-            ]);
-        }catch(QueryException $e){
-            return response()->json($e,500);
-          }catch(Exception $e){
-            return response()->json($e,500);
-          }
+            'message' => 'Report stored successfully',
+        ]);
+    } catch(QueryException $e){
+      return response()->json($e,500);}
+    catch (\Exception $e) {
+        return response()->json($e, 500);
     }
+}
+
 
     //show all the reports 
 

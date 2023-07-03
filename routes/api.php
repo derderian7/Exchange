@@ -64,6 +64,11 @@ Route::delete('deleteImage/{id}', [imageController::class, 'deleteImage']);
 
 
 
+<<<<<<< HEAD
+=======
+// Report Controller
+
+>>>>>>> 05c499fd1b0760a8ac3e9f4b81709b9dbe9b6559
 
 
 // Feedback Controller
@@ -79,7 +84,11 @@ Route::get('getWishlist', [WishlistController::class,'index']);
 Route::get('show_report', [ReportController::class, 'index']);
 Route::post('report', [ReportController::class, 'store']);
 Route::get('report_count', [ReportController::class, 'CountReport']);
+<<<<<<< HEAD
 
+=======
+Route::post('report/{id}', [ReportController::class, 'store']);
+>>>>>>> 05c499fd1b0760a8ac3e9f4b81709b9dbe9b6559
 
 //Location Controller
 Route::get('percentage_of_locations', [LocationController::class, 'percentage_of_locations']);
